@@ -1,0 +1,49 @@
+body {
+    background-color: green;
+}
+
+/* Defining styles for text */
+h2 {
+    text-align: center;
+    margin: 30px 40px;
+    background-color: red;
+}
+
+#main_form {
+    width: 80%;
+    margin: 0 auto;
+    border: 2px solid black;
+}
+
+/* Defining the different windows for the user to enter different information */
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    } to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.window {
+    height: 100%;
+    margin: 0;
+    display: block;
+}
+
+.window.visible {
+    opacity: 1;
+    display: block;
+    animation: slide-in 1s 1 forwards;
+}
+
+.window.hidden {
+    opacity: 0;
+    display: none;
+}
+
+.window.main_content {
+    display: flex;
+    background-color: orange;
+}
