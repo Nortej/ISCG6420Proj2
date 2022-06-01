@@ -5,8 +5,9 @@
         <link rel="stylesheet" href="css/main_css.css"/>
         <link rel="stylesheet" href="css/part_1_styles.css"/>
         <script src="scripts/bookingScript.js"></script>
+        <script src="scripts/menuScript.js"></script>
     </head>
-    <body onload="init()">
+    <body onload="init(),showMenu()">
         <div id="main_form">
             <div id="progress_buttons">
                 <button onclick="goBack()">Back</button>
@@ -50,6 +51,11 @@
 
             <div class="window hidden">
                 <h2>Trip Food</h2>
+                <!--div for menu box-->
+                <div id="menuBox">
+                    <table id="menu">
+                    </table>
+                </div>
             </div>
         </div>
     </body>
