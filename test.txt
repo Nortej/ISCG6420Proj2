@@ -1,1 +1,7 @@
-send help. idk why this isnt working!
+Important Links
+ 
+- Github Link
+https://github.com/Nortej/ISCG6420Proj2.git
+
+- Trello Link
+https://trello.com/b/uT18LZyR/6420-assignment

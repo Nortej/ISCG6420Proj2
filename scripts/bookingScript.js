@@ -8,6 +8,7 @@ function init() {
     setVisibility(windowElements[0], true);
 }
 
+// returns to the previous page
 function goBack() {
     if (currentPageIndex <= 0) return;
 
@@ -16,6 +17,7 @@ function goBack() {
     setVisibility(windowElements[currentPageIndex], true);
 }
 
+// moves forward to the next page
 function goForwards() {
     if (currentPageIndex >= numberOfWindows - 1) return;
 

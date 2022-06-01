@@ -9,8 +9,8 @@
     <body onload="init()">
         <div id="main_form">
             <div id="progress_buttons">
-                <button onclick="goBack()">not going well</button>
-                <button onclick="goForwards()">is it</button>
+                <button onclick="goBack()">Back</button>
+                <button onclick="goForwards()">Forwards</button>
             </div>
 
             <!-- Defining the window for the trip details page -->
@@ -33,7 +33,7 @@
                     <div>
                         <label for="trip-time-count">Trip Time</label>
                         <select id="trip-time-count">
-                            <option value="10" disabled>10am</option>
+                            <option value="10">10am</option>
                             <option value="11">11am</option>
                             <option value="12">12pm</option>
                             <option value="13">1pm</option>
@@ -47,12 +47,10 @@
             <div class="window hidden">
                 <h2>Trip Seats</h2>
             </div>
+
+            <div class="window hidden">
+                <h2>Trip Food</h2>
+            </div>
         </div>
     </body>
 </html>
-
-<!-- <div style="width: 100px; height: 100px; background-color: orange;" id="testbox"></div>
-        <div id="hover_element" style="position: absolute;"><p>ea sports. its in the game</p></div> -->
-        <!-- <table id="table_thing">
-            
-        </table> -->
