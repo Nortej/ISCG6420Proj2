@@ -11,7 +11,7 @@
 		<itemName>Burger</itemName>
 		<Image>images/burger.jpg</Image>
 		<Price>12.00</Price>
-		<Type> </Type>
+		<Type>-</Type>
 	</Item>
 	<Item>
 		<itemName>Sandwich</itemName>
