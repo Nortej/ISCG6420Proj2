@@ -9,7 +9,7 @@ table, th, td{
     border: 1px solid black;
 }
 th, td{
-    padding: 2.5px;
+    padding: 2px;
     width: 200px;
     height: 150px;
     text-align: center;
@@ -19,11 +19,13 @@ th, td{
 .slider{
     -webkit-appearance: none;
     width: 100%;
+    max-width: 190px;
     height: 18px;
     background: #d3d3d3;
     outline: none;
     opacity: 0.6;
     border-radius: 20px;
+    align-items: center;
 }
 .slider:hover{
     opacity: 1;
