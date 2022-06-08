@@ -56,13 +56,23 @@ function showMenu(){
         cellPrice.innerHTML = "$" + itemArray[i].Price;
         cellType.innerHTML = itemArray[i].Type;
         cellSlider.innerHTML = "<p id='sliderValue"+i+"' >0</p>" +
-        "<input type='range' class='slider' max='10' min='0' value='0' id='slider" + i + "' target='"+i+"'>";
+        "<input type='range' class='slider' max='10' min='0' value='0' id='slider" + i + "' target='"+itemArray[i].Price+"'>";
     }
     document.querySelectorAll(".slider").forEach(sliderValue=>{
         sliderValue.addEventListener('input', event =>{
             var i = sliderValue.id.substring(sliderValue.id.length-1);
             var output = document.getElementById("sliderValue"+i);
             output.innerHTML = sliderValue.value;
+            calcluateTotal();
         })
     })
+
+    function calcluateTotal() {
+        var total = 0;
+        document.querySelectorAll(".slider").forEach(sliderOption => {
+            var price = parseFloat(sliderOption.getAttribute("target"));
+            total += price * sliderOption.value;
+        });
+        document.getElementById("menuTotal").innerHTML = total;
+    }
 }
