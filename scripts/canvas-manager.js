@@ -31,7 +31,7 @@ class CanvasObject {
 
         this.initKeypress();
         this.pauseWindow = new PauseWindow(this.context, this.width, this.height);
-        this.gameWindow = new GameWindow(this.context, this.width, this.height);
+        this.gameWindow = new GameWindow(canvasID, this.context, this.width, this.height);
 
         this.start();
     }
@@ -58,7 +58,7 @@ class CanvasObject {
             }
         });
         document.addEventListener("keypress", event => {
-            if (event.code == swing_key) this.playerObject.SwingNet();
+            if (event.code == swing_key) this.gameWindow.playerObject.SwingNet();
         });
     }
 
@@ -140,7 +140,7 @@ class IWindow {
 }
 
 class GameWindow extends IWindow {
-    constructor(context, width, height) {
+    constructor(canvasID, context, width, height) {
         super(context, width, height);
 
         this.shapes = [];
@@ -148,13 +148,15 @@ class GameWindow extends IWindow {
         this.bugManager = new BugManager(28, _SCREEN_UPDATE_INTERVAL);
         this.score = 0;
 
+        this.collectSound = new Sound("happy.mp3", canvasID);
+
         this.createShapes();
     }
 
     createShapes() {
         this.playerObject = new Player(_SCREEN_UPDATE_INTERVAL);
         this.playerObject.xBound = this.width - this.playerObject.width;
-        this.playerObject.yBound = this.height - this.playerObject.height;
+        this.playerObject.yBound = this.height - this.playerObject.height - 75;
 
         this.playerObject.UpdatePosition = function() {
             if (left_pressed) {
@@ -186,10 +188,10 @@ class GameWindow extends IWindow {
         this.movingShapes.forEach(shape => {
             shape.Draw(this.context);
         });
+        this.bugManager.Draw(this.context);
         this.shapes.forEach(shape => {
             shape.Draw(this.context);
         });
-        this.bugManager.Draw(this.context);
     }
 
     UpdatePosition() {
@@ -202,11 +204,13 @@ class GameWindow extends IWindow {
 
     Score() {
         this.score += 1;
+        this.collectSound.Play();
         this.scoreText.SetText("Score: " + this.score);
     }
 
     Unscore() {
         this.score -= 1;
+        this.collectSound.Play();
         this.scoreText.SetText("Score: " + this.score);
     }
 }
@@ -220,7 +224,7 @@ class PauseWindow extends IWindow {
     }
 
     createShapes() {
-        this.shapes.push(new Rectangle(this.width / 5, -10, 3 * this.width / 5, this.height, "#000000aa", "black", 5));
+        this.shapes.push(new Rectangle(this.width / 5, -5, 3 * this.width / 5, this.height + 10, "#000000aa", "black", 5));
         this.shapes.push(new CanvasText(this.width / 2, 100, "Paused", "60px Arial", "center", "white", "black", 0));
     }
 

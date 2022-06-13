@@ -153,8 +153,6 @@ class Bug extends Arc {
             this._IdleMovement();
             this._ghost_y -= this.y_velocity;
             // console.log("flying pretty good");
-        } else {
-            console.log("guess ill die");
         }
     }
 
@@ -163,10 +161,12 @@ class Bug extends Arc {
     }
 
     CheckCollision(playerObject) {
-        if (TestPlayerBugCollision(playerObject.x, playerObject.y, playerObject.width, playerObject.height, this))
+        if (playerObject.CanCatchBugs) {
+            if (TestPlayerBugCollision(playerObject.catchNet.x, playerObject.catchNet.y, playerObject.catchNet.width, playerObject.catchNet.height, this))
+                return 1;
+        }
+        else if (TestPlayerBugCollision(playerObject.x, playerObject.y, playerObject.width, playerObject.height, this))
             return -1;
-        else if (TestPlayerBugCollision(playerObject.net.x, playerObject.net.y, playerObject.net.width, playerObject.net.height, this))
-            return 1;
         return 0;
     }
 
@@ -176,31 +176,7 @@ class Bug extends Arc {
     }
 }
 
-class Colour {
-    constructor(r, g, b) {
-        this.r = Math.round(r);
-        this.g = Math.round(g);
-        this.b = Math.round(b);
-    }
 
-    add(anotherColour) {
-        this.r += anotherColour.r;
-        if (this.r > 255) this.r = 255;
-        else if (this.r < 0) this.r = 0;
-        
-        this.g += anotherColour.g;
-        if (this.g > 255) this.g = 255;
-        else if (this.g < 0) this.g = 0;
-
-        this.b += anotherColour.b;
-        if (this.b > 255) this.b = 255;
-        else if (this.b < 0) this.b = 0;
-    }
-
-    toHex() {
-        return "#" + this.r.toString(16).padStart(2, "0") + this.g.toString(16).padStart(2, "0") + this.b.toString(16).padStart(2, "0")
-    }
-}
 
 class Player extends Rectangle {
     constructor(screenUpdatePeriod) {
@@ -213,41 +189,63 @@ class Player extends Rectangle {
 
         this.isFlipped = true;
 
-        this.net = new Rectangle(this.x, this.y, 90, 10, "yellow", "yellow", 0);
+        this.net = new Rectangle(0, -5, 100, 10, "yellow", "yellow", 0);
         this.net.rightOffset = this.width + this.xSpeed / 2;
         this.net.leftOffset = - (this.net.rightOffset + this.width) + this.xSpeed;
         this.net.yOffset = this.height / 2 - this.net.height / 2;
 
-        this.timeSinceLastSwing = 0;
+        this.catchNet = new Rectangle(this.x, this.y, this.net.width - 30, this.net.height, "blue", "blue", 0);
+        this.catchNet.rightOffset = this.width + this.xSpeed / 2;
+        this.catchNet.leftOffset = -(this.catchNet.width + this.xSpeed / 2);
+        this.catchNet.yOffset = this.height / 2 - this.catchNet.height / 2;
+
+        this.timeSinceLastSwing = 3.1;
+        this.baseNetRotation = Math.PI / 4;
+        this.netRotation = -this.baseNetRotation;
+
+        this.CanCatchBugs = false;
     }
 
     Draw(context) {
         super.Draw(context);
-        if (this.isFlipped) this.net.xOffset = this.net.rightOffset;
-        else this.net.xOffset = this.net.leftOffset;
+  
+        var contextXOffset = this.x + this.width / 2;
+        var contextYOffset = this.y + this.height / 2;
+        context.translate(contextXOffset, contextYOffset);
+        context.rotate(this.netRotation);
 
-        this.net.Draw(context);
+        if (!this.isFlipped) {
+            context.scale(-1, 1);
+            this.net.Draw(context);
+            context.scale(-1, 1);
+        }  else {
+            this.net.Draw(context);
+        }
+        context.rotate(-this.netRotation);
+        context.translate(-contextXOffset, -contextYOffset);
     }
 
     UpdateOtherFeatures() {
-        this.net.x = this.x + this.net.xOffset;
-        this.net.y = this.y + this.net.yOffset;
+        if (this.timeSinceLastSwing <= 0.785) {
+            this.netRotation = (this.baseNetRotation - 0.2) * Math.cos(8 * this.timeSinceLastSwing) + 0.2;
 
+            if (this.netRotation < 0.3) this.CanCatchBugs = true;
+            else this.CanCatchBugs = false;
+
+            if (this.isFlipped) this.netRotation = -this.netRotation;
+        } else {
+            this.netRotation = this.baseNetRotation;
+            if (this.isFlipped) this.netRotation = -this.netRotation;
+        }
         this.timeSinceLastSwing += this.deltaTime;
+
+        if (this.isFlipped) this.catchNet.x = this.x + this.catchNet.rightOffset;
+        else this.catchNet.x = this.x + this.catchNet.leftOffset;
+        this.catchNet.y = this.y + this.catchNet.yOffset;
     }
+
 
     SwingNet() {
-        console.log(this.timeSinceLastSwing);
-        if (this.timeSinceLastSwing >= 2) {
-            console.log("swong");
-            this.timeSinceLastSwing = 0;
-        }
+        if (this.timeSinceLastSwing >= 1) this.timeSinceLastSwing = 0;
     }
-}
-
-// other functions
-function TestPlayerBugCollision(playerX, playerY, playerWidth, playerHeight, bug) {
-    var horizontal_edge = !(playerX + playerWidth < bug.x - bug.radius || playerX > bug.x + bug.radius);
-    var vertical_edge = !(playerY + playerHeight < bug.y - bug.radius || playerY > bug.y + bug.radius);
-    return horizontal_edge && vertical_edge;
 }
