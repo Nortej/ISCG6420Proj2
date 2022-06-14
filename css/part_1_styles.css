@@ -47,3 +47,78 @@ h2 {
     display: flex;
     background-color: orange;
 }
+
+/* styles for the seat selection */
+#seat-selection {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: red;
+}
+
+.seat {
+    width: 30px;
+    height: 30px;
+    border: 0px;
+}
+
+.seat button {
+    width: 100%;
+    height: 100%;
+    border: 0px;
+}
+
+.seat .booked_seat {
+    background-color: green;
+}
+
+.seat .empty_seat {
+    background-color: lightblue;
+}
+
+.seat .selected_seat {
+    background-color: blue;
+}
+
+#seat_selection_side {
+    position: relative;
+}
+
+#hover_element {
+    background-color: orange;
+    width: 14em;
+}
+
+#hover_element h2, #hover_element p {
+    margin: 0;
+    text-align: center;
+}
+
+@keyframes slowly_fade {
+    0% {
+        visibility: visible;
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        visibility: visible;
+    }
+}
+
+.error_info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
+    background-color: red;
+}
+.error_info.display_animation {
+    animation-name: slowly_fade;
+    animation-duration: 4s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+}
