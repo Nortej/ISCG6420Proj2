@@ -7,6 +7,5 @@ function getInputs(){
         document.getElementById("DtBoat").innerHTML = "Tere Boat";
     } else{document.getElementById("DtBoat").innerHTML = "Nui Boat";}
     
-    document.getElementById("DtDate").innerHTML = document.getElementById("trip-date").value;
-    
+    document.getElementById("DtDateTime").innerHTML = document.getElementById("trip-time-count").value + ':00, ' + document.getElementById("trip-date").value;    
 }
