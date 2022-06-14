@@ -6,10 +6,10 @@
         <link rel="stylesheet" href="css/part_1_styles.css"/>
         <link rel="stylesheet" href="css/menu.css"/>
         <script src="scripts/bookingScript.js"></script>
-        <!-- <script src="scripts/menuScript.js"></script> -->
+        <script src="scripts/menuScript.js"></script>
         <script src="scripts/boatVerification.js"></script>
     </head>
-    <body onload="init(), onPageLoad()">
+    <body onload="init(), onPageLoad(), showMenu()">
         <div id="main_form">
             <div id="progress_buttons">
                 <button onclick="goBack()">Back</button>
@@ -21,7 +21,7 @@
                 <h2>Trip Details</h2>
                 <div class="main_content">
                     <div>
-                        <label for="fNname">First Name</label>
+                        <label for="fName">First Name</label>
                         <input type="text" id="fName">
                     </div>
                     <div>
@@ -38,7 +38,7 @@
                     </div>
                     <div>
                         <label for="selected-boat">Boat Trip</label>
-                        <select>
+                        <select id="selected-boat">
                             <option value="tere">Tere Boat</option>
                             <option value="nui">Nui Boat</option>
                         </select>
@@ -81,6 +81,46 @@
                     <div id="menuTotalDiv">Total:</div>
                     <div id="menuTotal">$0.00</div>
                 </div>
+            </div>
+
+            <!--Page for the user to confirm the booking details-->
+            <div class="window hidden">
+                <h2>Confirm Booking</h2>
+                <h3>Trip Details</h3>
+                <div>
+                    <label for="DtName">Name</label>
+                    <div id="DtName"></div>
+                </div>
+                <div>
+                    <label for="DtEmail">Email</label>
+                    <div id="DtEmail"></div>
+                </div>
+                <div>
+                    <label for="DtNumber">Contact Number</label>
+                    <div id="DtNumber"></div>
+                </div>
+                <div>
+                    <label for="DtBoat">Boat</label>
+                    <div id="DtBoat"></div>
+                </div>
+                <div>
+                    <label for="DtDateTime">Date & Time</label>
+                    <div id="DtDateTime"></div>
+                </div>
+                
+                <h3>Seat Details</h3>
+                <div>
+                    <label for="DtSeats">Seats</label>
+                    <div id="DtSeats"></div>
+                </div>
+
+                <h3>Food</h3>
+                <div id="DtMenu"></div>
+            </div>
+
+            <!--confirmation message ??-->
+            <div class="window hidden">
+                <h2>Confirmed</h2>
             </div>
         </div>
     </body>

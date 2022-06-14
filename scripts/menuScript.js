@@ -57,6 +57,7 @@ function showMenu(){
         cellType.innerHTML = itemArray[i].Type;
         cellSlider.innerHTML = "<p id='sliderValue"+i+"' >0</p>" +
         "<input type='range' class='slider' max='10' min='0' value='0' id='slider" + i + "' target='"+itemArray[i].Price+"'>";
+        
     }
 
     //each slider will update value for each item
