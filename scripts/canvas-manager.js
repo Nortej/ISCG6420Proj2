@@ -29,16 +29,16 @@ class CanvasObject {
 
         this.isPaused = false;
 
-        this.initKeypress();
+        this.initKeyEvents();
+        this.initMouseEvents();
         this.pauseWindow = new PauseWindow(this.context, this.width, this.height);
         this.gameWindow = new GameWindow(canvasID, this.context, this.width, this.height);
 
         this.start();
     }
 
-    initKeypress() {
+    initKeyEvents() {
         document.addEventListener("keydown", event => {
-            console.log(event.code);
             if (event.code == left_key) left_pressed = true;
             else if (event.code == right_key) right_pressed = true;
             else if (event.code == up_key) up_pressed = true;
@@ -59,6 +59,11 @@ class CanvasObject {
         });
         document.addEventListener("keypress", event => {
             if (event.code == swing_key) this.gameWindow.playerObject.SwingNet();
+        });
+    }
+    initMouseEvents() {
+        this.canvas.addEventListener("mousedown", event => {
+            if (this.isPaused) this.gameWindow.pauseWindow.ClickEvent(event.layerX, event.layerY);
         });
     }
 
@@ -148,7 +153,8 @@ class GameWindow extends IWindow {
         this.bugManager = new BugManager(28, _SCREEN_UPDATE_INTERVAL);
         this.score = 0;
 
-        this.collectSound = new Sound("happy.mp3", canvasID);
+        this.collectSound = new Sound("collect.mp3", canvasID);
+        this.hitSound = new Sound("bug_hit.mp3", canvasID);
 
         this.createShapes();
     }
@@ -210,7 +216,7 @@ class GameWindow extends IWindow {
 
     Unscore() {
         this.score -= 1;
-        this.collectSound.Play();
+        this.hitSound.Play();
         this.scoreText.SetText("Score: " + this.score);
     }
 }
@@ -233,9 +239,4 @@ class PauseWindow extends IWindow {
             shape.Draw(this.context);
         });
     }
-}
-
-
-function RandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
 }

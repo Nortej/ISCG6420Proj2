@@ -106,6 +106,22 @@ class Arc extends Shape {
     }
 }
 
+class Slider extends Rectangle {
+    constructor(x, y, width, height, fillColor, strokeColor, borderWidth) {
+        super(x, y, width, height, fillColor, strokeColor, borderWidth);
+        this.box = new Rectangle(x, y, 10, 10, "black", "black", 0);
+    }
+
+    Draw(context) {
+        super.Draw(context);
+        this.box.Draw(context);
+    }
+
+    UpdateValue(event) {
+        console.log(event);
+    }
+}
+
 class Bug extends Arc {
     constructor(x, y, deltaTime) {
         super(x, y, 0, 0, 0, Math.PI * 2, false, "yellow", "#00000000", 3);
@@ -175,8 +191,6 @@ class Bug extends Arc {
         this.y = this._ghost_y + 5 * Math.sin((this.timeAlive - 5) * this._y_multiplier);
     }
 }
-
-
 
 class Player extends Rectangle {
     constructor(screenUpdatePeriod) {

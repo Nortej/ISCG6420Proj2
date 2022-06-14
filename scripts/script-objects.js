@@ -51,3 +51,7 @@ function TestPlayerBugCollision(playerX, playerY, playerWidth, playerHeight, bug
     var vertical_edge = !(playerY + playerHeight < bug.y - bug.radius || playerY > bug.y + bug.radius);
     return horizontal_edge && vertical_edge;
 }
+
+function RandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
