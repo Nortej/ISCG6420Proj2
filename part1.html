@@ -8,6 +8,7 @@
         <script src="scripts/bookingScript.js"></script>
         <script src="scripts/menuScript.js"></script>
         <script src="scripts/boatVerification.js"></script>
+        <script src="scripts/tripValidation.js"></script>
     </head>
     <body onload="init(), onPageLoad(), showMenu()">
         <div id="main_form">
@@ -71,14 +72,14 @@
                 <h2>Trip Food</h2>
                 <!--div for menu box-->
                 <div id="menuBox">
-                    <table id="menu">
+                    <table class="table1" id="menu">
                     </table>
                     <!--key for menu-->
                     <div id="menuTypeKey"> 
                         <p>| V - Vegeterian | GF - Gluten Free | EF - Egg Free |</p>
                     </div>
                     <!--total price here - updated dynamically-->
-                    <div id="menuTotalDiv">Total:</div>
+                    <div>Total:</div>
                     <div id="menuTotal">$0.00</div>
                 </div>
             </div>
@@ -115,7 +116,12 @@
                 </div>
 
                 <h3>Food</h3>
-                <div id="DtMenu"></div>
+                <div id="DtMenu">
+                    <table id="menuConfirm"></table>
+                </div>
+                <div>Food Total:</div>
+                <div id="finalMenuTotal">$0.00</div>
+                
             </div>
 
             <!--confirmation message ??-->

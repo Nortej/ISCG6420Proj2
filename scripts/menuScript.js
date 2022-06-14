@@ -51,7 +51,7 @@ function showMenu(){
         var cellSlider = row.insertCell(4);
         var image = itemArray[i].Image;
 
-        cellImage.innerHTML = "<img src='" + image + "' width='200' height='150'>"
+        cellImage.innerHTML = "<img src='" + image + "' width='150' height='100'>"
         cellName.innerHTML = itemArray[i].itemName;
         cellPrice.innerHTML = "$" + itemArray[i].Price;
         cellType.innerHTML = itemArray[i].Type;

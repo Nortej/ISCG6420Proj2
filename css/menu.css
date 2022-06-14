@@ -10,8 +10,15 @@ table, th, td{
 }
 th, td{
     padding: 2px;
-    width: 200px;
-    height: 150px;
+    text-align: center;
+    font-size: 18px;
+    min-width: 40px;
+}
+
+.table1 th td{
+    padding: 2px;
+    width: 150px;
+    height: 100px;
     text-align: center;
     font-size: 18px;
 }
