@@ -7,9 +7,10 @@
         <link rel="stylesheet" href="css/menu.css"/>
         <script src="scripts/bookingScript.js"></script>
         <!-- <script src="scripts/menuScript.js"></script> -->
+        <script src="scripts/seatSelection.js"></script>
         <script src="scripts/boatVerification.js"></script>
     </head>
-    <body onload="init(), onPageLoad()">
+    <body onload="init(), onPageLoad(), seatSelectionInit()">
         <div id="main_form">
             <div id="progress_buttons">
                 <button onclick="goBack()">Back</button>
@@ -65,6 +66,24 @@
             <!-- Defining the window for the trip seats page-->
             <div class="window hidden">
                 <h2>Trip Seats</h2>
+                <div id="seat-selection">
+                    <table id="seat_table"></table>
+                    <div id="seat_selection_side">
+                        <div id="hover_element">
+                            <h2>Seat Details</h2>
+                            <p>Booking Status: <span id="hover_status"></span></p>
+                            <p>Seat Cost: $<span id="hover_cost"></span></p>
+                            <p>Seat Location: <span id="hover_location"></span></p><br/>
+                            <p>Seats Remaining: <span id="remaining_seats"></span></p>
+                        </div>
+                        <div class="error_info" id="already_booked_seat">
+                            <p>You cannot book seats that are already booked</p>
+                        </div>
+                        <div class="error_info" id="max_booked_seat">
+                            <p>You have reached the maximum amount of seats booked for this trip</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="window hidden">
