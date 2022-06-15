@@ -81,11 +81,12 @@ function seatSelectionInit() {
     document.querySelectorAll(".empty_seat").forEach(buttonObject => {
         buttonObject.addEventListener("click", event => {
             var id = buttonObject.id;
+            var data = {row: buttonObject.getAttribute("row"), col: buttonObject.getAttribute("column")};
             // testing if the user has already selected the seat
             if (currentlySelectedSeats[id] == undefined) {
                 // testing that the user can select another seat
                 if (currentlySelectedSeats.seat_count + 1 <= currentlySelectedSeats.max_seat_count) {
-                    currentlySelectedSeats[id] = 1;
+                    currentlySelectedSeats[id] = data;
                     currentlySelectedSeats.seat_count++;
                     buttonObject.classList.toggle("selected_seat");
 
