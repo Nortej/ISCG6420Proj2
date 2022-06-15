@@ -10,12 +10,24 @@ function getInputs(){
     document.getElementById("DtDateTime").innerHTML = document.getElementById("trip-time-count").value + ':00, ' + document.getElementById("trip-date").value;
     
     //page2 seats
+    //loop to display seat numbers
     var selected_seats = Object.keys(currentlySelectedSeats);
     for(i=2; i< selected_seats.length; i++){
         document.getElementById("DtSeats").innerHTML += selected_seats[i];
         if (i != (selected_seats.length -1) ){
             document.getElementById("DtSeats").innerHTML += ", ";
         }
+    }
+
+    //loop to get price of each seat
+    var seatCost = 0;
+    for(i=2; i<selected_seats.length; i++){
+        var seatA = selected_seats[i];
+        var seatRow = parseInt(currentlySelectedSeats[seatA].row);
+        var seatCol = parseInt(currentlySelectedSeats[seatA].col);
+        var seat = selected_boat_layout[seatRow][seatCol];
+        seatCost += parseFloat(seat.price);
+        document.getElementById("DtSeatCost").innerHTML = "$" + seatCost;
     }
 
     //page3 menu
@@ -32,4 +44,9 @@ function getInputs(){
         //takes calculated menu total value and applies it to the confirmation page
         document.getElementById("finalMenuTotal").innerHTML = document.getElementById("menuTotal").innerHTML;
     }
+
+    //total cost
+    var stringSeatCost = document.getElementById("DtSeatCost").innerHTML;
+    var stringFoodCost = document.getElementById("finalMenuTotal").innerHTML;
+    document.getElementById("DtTotalCost").innerHTML = '$' + (parseFloat(stringSeatCost.substring(1, stringSeatCost.length)) + parseFloat(stringFoodCost.substring(1, stringFoodCost.length)));
 }
