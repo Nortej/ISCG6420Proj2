@@ -24,6 +24,22 @@ function goForwards() {
     setVisibility(windowElements[currentPageIndex], false);
     currentPageIndex++;
     setVisibility(windowElements[currentPageIndex], true);
+    if(currentPageIndex == 1){
+        var boat_selection = document.getElementById("selected-boat").value;
+        if(boat_selection == 'tere'){
+            selected_boat_layout = tere_boat_layout_objects;
+            document.getElementById("tere_table").style.display = "block";
+            document.getElementById("nui_table").style.display = "none";
+        }
+        else if (boat_selection == 'nui'){
+            selected_boat_layout = nui_boat_layout_objects;
+            document.getElementById("nui_table").style.display = "block";
+            document.getElementById("tere_table").style.display = "none";
+        }
+    }
+    if(currentPageIndex == 3){
+        getInputs();
+    }
 }
 
 // sets the visibility of the element provided to being visible or invisible
