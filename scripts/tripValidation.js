@@ -19,8 +19,10 @@ function getInputs(){
         var nameCell = row.insertCell(0);
         var quantityCell = row.insertCell(1);
 
+        //inserts values from menu table into menuConfirm table
         nameCell.innerHTML = table.rows[i].cells[1].innerHTML;
         quantityCell.innerHTML = document.getElementById("sliderValue" + i).innerHTML;
+        //takes calculated menu total value and applies it to the confirmation page
         document.getElementById("finalMenuTotal").innerHTML = document.getElementById("menuTotal").innerHTML;
     }
 }
