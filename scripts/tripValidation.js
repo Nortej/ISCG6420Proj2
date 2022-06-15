@@ -48,5 +48,6 @@ function getInputs(){
     //total cost
     var stringSeatCost = document.getElementById("DtSeatCost").innerHTML;
     var stringFoodCost = document.getElementById("finalMenuTotal").innerHTML;
-    document.getElementById("DtTotalCost").innerHTML = '$' + (parseFloat(stringSeatCost.substring(1, stringSeatCost.length)) + parseFloat(stringFoodCost.substring(1, stringFoodCost.length)));
+    document.getElementById("DtTotalCost").innerHTML = 
+    '$' + (parseFloat(stringSeatCost.substring(1, stringSeatCost.length)) + parseFloat(stringFoodCost.substring(1, stringFoodCost.length)));
 }
