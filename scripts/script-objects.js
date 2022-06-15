@@ -43,6 +43,10 @@ class Sound {
     Pause() {
         this.sound.pause();
     }
+    
+    SetVolume(newVolume) {
+        this.sound.volume = newVolume / 100;
+    }
 }
 
 // other functions
@@ -54,4 +58,10 @@ function TestPlayerBugCollision(playerX, playerY, playerWidth, playerHeight, bug
 
 function RandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function RectContains(shape, x, y) {
+    var horizontal_edge = (shape.x < x && shape.x + shape.width > x);
+    var vertical_edge = (shape.y < y && shape.y + shape.height > y);
+    return horizontal_edge && vertical_edge;
 }

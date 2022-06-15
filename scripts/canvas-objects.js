@@ -107,18 +107,62 @@ class Arc extends Shape {
 }
 
 class Slider extends Rectangle {
-    constructor(x, y, width, height, fillColor, strokeColor, borderWidth) {
+    constructor(x, y, width, height, fillColor, strokeColor, borderWidth, sliderDescription, defaultValue, minValue, maxValue) {
         super(x, y, width, height, fillColor, strokeColor, borderWidth);
-        this.box = new Rectangle(x, y, 10, 10, "black", "black", 0);
+        this.box = new Rectangle(x, y, 10, height, "black", "black", 0);
+        this.description = new CanvasText(x - sliderDescription.length, y + height, sliderDescription, "30px Arial", "right", "white", "#00000000", 0);
+        this.text = new CanvasText(x + width + 20, y + height, defaultValue, "30px Arial", "left", "white", "#00000000", 0);
+
+        this.minValue = minValue;
+        this.maxValue = maxValue - 1;
+        this.value = defaultValue;
+
+        this._UpdatePosition();
     }
 
     Draw(context) {
         super.Draw(context);
         this.box.Draw(context);
+        this.text.Draw(context);
+        this.description.Draw(context);
     }
 
-    UpdateValue(event) {
-        console.log(event);
+    UpdateValue(xCoord) {
+        this.box.x = xCoord;
+        if (this.box.x < this.x) this.box.x = this.x;
+        else if (this.box.x + this.box.width > this.x + this.width) this.box.x = this.x + this.width - this.box.width;
+
+        this._UpdateSliderValue();
+        this._UpdatePosition();
+    }
+
+    SetValue(newValue) {
+        this.value = newValue;
+        this.text.SetText(this.value);
+        this._UpdatePosition();
+    }
+
+    _UpdateSliderValue() {
+        this.value = ((this.box.x - this.x) / (this.width - this.box.width)) * this.maxValue + this.minValue;
+        this.value = parseInt(this.value);
+        this.text.SetText(this.value);
+    }
+
+    _UpdatePosition() {
+        this.box.x = ((this.value - this.minValue) * (this.width - this.box.width)) / (this.maxValue) + this.x;
+    }
+}
+
+class Button extends Rectangle {
+    constructor(x, y, width, height, text, fontSize, font, fillColor, strokeColor, borderWidth) {
+        super(x - width / 2, y - height / 2, width, height, fillColor, strokeColor, borderWidth);
+
+        this.text = new CanvasText(x, this.y + this.height / 2 + fontSize / 3, text, fontSize + "px " + font, "center", "white", "white", 0);
+    }
+
+    Draw(context) {
+        super.Draw(context);
+        this.text.Draw(context);
     }
 }
 
@@ -128,7 +172,6 @@ class Bug extends Arc {
         this._ghost_x = x;
         this._ghost_y = y;
 
-        // 50 seems good
         this.y_velocity = 100 * deltaTime;
 
         this._x_multiplier = 2 * Math.PI / 2;
@@ -144,11 +187,6 @@ class Bug extends Arc {
                                      (this.targetColour.g - this.currentColour.g) / (deltaTime * 6000), 
                                      (this.targetColour.b - this.currentColour.b) / (deltaTime * 6000));
         this.sizeStep = (15 - this.radius) / (deltaTime * 6000);
-
-
-        // debug stuff
-        // this.radius = 20;
-        // this.timeAlive = 9;
     }
 
     UpdatePosition() {
@@ -158,7 +196,6 @@ class Bug extends Arc {
         else if (this.timeAlive <= 2) {}
         else if (this.timeAlive <= 5) {
             // changing colour and growing
-            // console.log("changing colour and growing");
             this.currentColour.add(this.colourStep);
             this.radius += this.sizeStep;
             this.fillColor = this.currentColour.toHex();
@@ -168,7 +205,6 @@ class Bug extends Arc {
         } else if (this.timeAlive <= 15) {
             this._IdleMovement();
             this._ghost_y -= this.y_velocity;
-            // console.log("flying pretty good");
         }
     }
 
@@ -261,5 +297,16 @@ class Player extends Rectangle {
 
     SwingNet() {
         if (this.timeSinceLastSwing >= 1) this.timeSinceLastSwing = 0;
+    }
+
+    Restart() {
+        this.x = 20;
+        this.y = 20;
+        this.isFlipped = false;
+
+        this.timeSinceLastSwing = 3.1;
+        this.netRotation = -this.baseNetRotation;
+
+        this.CanCatchBugs = false;
     }
 }
