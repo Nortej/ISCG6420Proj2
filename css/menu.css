@@ -1,13 +1,17 @@
 #menuBox{
     width: 80%;
     max-width: 1200px;
-    margin:auto;
-    border-width: 2px;
-    border-color: black;
+    margin: 0 auto;
+    background-color: #ffffff99;
+    border: 5px solid white;
+    border-radius: 20px 0;
 }
-table, th, td{
-    border: 1px solid black;
+
+.table1 {
+    margin: 0 auto;
+    padding: 10px;
 }
+
 th, td{
     padding: 2px;
     text-align: center;
@@ -52,4 +56,12 @@ th, td{
     border-radius: 50px;
     background: grey;
     cursor: pointer;
+}
+
+#menuTypeKey {
+    text-align: center;
+}
+
+#menuTotalPrice {
+    text-align: center;
 }

@@ -14,9 +14,6 @@ var tere_boat_layout = [[0, 1, 1, 1, 0, 1, 1, 1, 0],
                      [0, 1, 1, 1, 0, 1, 1, 1, 0]
                     ];
 
-<<<<<<< HEAD
-var two = []
-=======
 var nui_boat_layout = [[0, 0, 1, 1, 0, 1, 1, 0, 0],
                         [0, 0, 1, 1, 0, 1, 1, 0, 0],
                         [0, 1, 1, 1, 0, 1, 1, 1, 0],
@@ -31,7 +28,6 @@ var nui_boat_layout = [[0, 0, 1, 1, 0, 1, 1, 0, 0],
                         [0, 1, 1, 1, 0, 1, 1, 1, 0],
                         [0, 1, 1, 1, 0, 1, 1, 1, 0]
                     ];
->>>>>>> 743b2fb77ac7dad9c5de9a8744c9d8fecb710426
 
 var boat_layout = [];
 
@@ -55,6 +51,7 @@ class Seat {
 
         this.status = status;
         this.booked_to = booked_to;
+        this.fancy_name = letterMap[this.row - 1] + (this.column);
     }
 }
 
@@ -84,12 +81,13 @@ function seatSelectionInit() {
     // adding the event to select a specific seat for booking
     document.querySelectorAll(".empty_seat").forEach(buttonObject => {
         buttonObject.addEventListener("click", event => {
+            var data = {row: buttonObject.getAttribute("row"), col: buttonObject.getAttribute("col")};
             var id = buttonObject.id;
             // testing if the user has already selected the seat
             if (currentlySelectedSeats[id] == undefined) {
                 // testing that the user can select another seat
                 if (currentlySelectedSeats.seat_count + 1 <= currentlySelectedSeats.max_seat_count) {
-                    currentlySelectedSeats[id] = 1;
+                    currentlySelectedSeats[id] = data;
                     currentlySelectedSeats.seat_count++;
                     buttonObject.classList.toggle("selected_seat");
 
@@ -160,14 +158,12 @@ function createBoatLayout(boatStructure, table) {
     var empty_seat = no_seat.cloneNode(true);
     var empty_seat_button = document.createElement("button");
     empty_seat_button.classList.add("empty_seat");
-    empty_seat_button.innerHTML = "!";
     empty_seat.appendChild(empty_seat_button);
 
     // creates a booked seat which can be cloned
     var booked_seat = no_seat.cloneNode(true);
     var booked_seat_button = document.createElement("button");
     booked_seat_button.classList.add("booked_seat");
-    booked_seat_button.innerHTML = "-";
     booked_seat.appendChild(booked_seat_button);
     
     // for each seat in the boat structure, create a seat element
@@ -183,6 +179,7 @@ function createBoatLayout(boatStructure, table) {
                 var childButton = table_cell.childNodes[0];
                 childButton.setAttribute("row", cell.row);
                 childButton.setAttribute("column", cell.column);
+                childButton.innerHTML = cell.fancy_name;
                 childButton.id = letterMap[cell.row - 1] + cell.column;
             }
             

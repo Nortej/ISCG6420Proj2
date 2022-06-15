@@ -5,7 +5,7 @@ function init() {
     windowElements = document.querySelectorAll(".window");
     numberOfWindows = windowElements.length;
 
-    setVisibility(windowElements[0], true);
+    setVisibility(windowElements[currentPageIndex], true);
 }
 
 // returns to the previous page
@@ -36,6 +36,8 @@ function goForwards() {
             document.getElementById("nui_table").style.display = "block";
             document.getElementById("tere_table").style.display = "none";
         }
+
+        currentlySelectedSeats.max_seat_count = parseInt(document.getElementById("seat-count").value);
     }
     if(currentPageIndex == 3){
         getInputs();
