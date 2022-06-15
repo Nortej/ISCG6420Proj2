@@ -3,16 +3,55 @@ body {
 }
 
 /* Defining styles for text */
-h2 {
+h1, h2{
+    border: 5px solid;
+    border-radius: 20px 0;
+    padding: 10px;
     text-align: center;
-    margin: 30px 40px;
-    background-color: red;
+    color: black;
+}
+
+h1 {
+    border-color: #22577A;
+    background-color: #58819fd8;
+}
+
+h2 {
+    border-color: #38A3A5;
+    background-color: #59a1a2d8;
 }
 
 #main_form {
     width: 80%;
     margin: 0 auto;
     border: 2px solid black;
+}
+
+/* styles for the forward and backwards buttons */
+#progress_buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#progress_buttons button {
+    background-color: #ffffff99;
+    border: 5px solid white;
+    padding: 5px 20px;
+    transition: all 2s;
+    margin: 0 30px;
+    font-size: 20px;
+}
+
+#progress_buttons #forward {
+    border-radius: 0 15px 15px 0;
+}
+#progress_buttons #back {
+    border-radius: 15px 0 0 15px;
+}
+
+#progress_buttons button:hover {
+    box-shadow: 5px 5px black;
 }
 
 /* Defining the different windows for the user to enter different information */
@@ -28,8 +67,10 @@ h2 {
 
 .window {
     height: 100%;
-    margin: 0;
+    width: 80%;
+    margin: 0 auto;
     display: block;
+    position: relative;
 }
 
 .window.visible {
@@ -43,10 +84,29 @@ h2 {
     display: none;
 }
 
-.window.main_content {
+.main_content {
     display: flex;
-    background-color: orange;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff99;
+    border: 5px solid white;
+    border-radius: 20px 0;
 }
+
+/* styles for the user details content */
+.form-field {
+    margin: 10px 0;
+}
+
+#weather {
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translate(0, -40%);
+    width: 150px;
+}
+
 
 /* styles for the seat selection */
 #seat-selection {
