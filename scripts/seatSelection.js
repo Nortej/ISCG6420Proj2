@@ -83,6 +83,7 @@ function seatSelectionInit() {
         buttonObject.addEventListener("click", event => {
             var data = {row: buttonObject.getAttribute("row"), col: buttonObject.getAttribute("col")};
             var id = buttonObject.id;
+            var data = {row: buttonObject.getAttribute("row"), col: buttonObject.getAttribute("column")};
             // testing if the user has already selected the seat
             if (currentlySelectedSeats[id] == undefined) {
                 // testing that the user can select another seat
