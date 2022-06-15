@@ -1,9 +1,9 @@
 var hoverElementStatusField, hoverElementCostField, hoverElementLocationField, remainingSeatsField;
 var seatCountError, seatTakenError;
 var currentlySelectedSeats = {seat_count: 0, max_seat_count: 10};
-var letterMap = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+var letterMap = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"];
 
-var one = [[0, 1, 1, 1, 0, 1, 1, 1, 0],
+var tere_boat_layout = [[0, 1, 1, 1, 0, 1, 1, 1, 0],
                      [0, 1, 1, 1, 0, 1, 1, 1, 0], 
                      [1, 1, 2, 1, 0, 1, 1, 1, 1],
                      [1, 1, 2, 1, 0, 1, 1, 1, 1],
@@ -14,7 +14,24 @@ var one = [[0, 1, 1, 1, 0, 1, 1, 1, 0],
                      [0, 1, 1, 1, 0, 1, 1, 1, 0]
                     ];
 
+<<<<<<< HEAD
 var two = []
+=======
+var nui_boat_layout = [[0, 0, 1, 1, 0, 1, 1, 0, 0],
+                        [0, 0, 1, 1, 0, 1, 1, 0, 0],
+                        [0, 1, 1, 1, 0, 1, 1, 1, 0],
+                        [0, 2, 2, 2, 0, 1, 1, 2, 0],
+                        [1, 1, 1, 1, 0, 1, 1, 2, 1],
+                        [2, 1, 2, 2, 0, 1, 1, 2, 1],
+                        [2, 1, 1, 1, 0, 2, 2, 2, 2],
+                        [2, 1, 1, 1, 0, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
+                        [2, 2, 1, 1, 0, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
+                        [0, 1, 1, 1, 0, 1, 1, 1, 0],
+                        [0, 1, 1, 1, 0, 1, 1, 1, 0]
+                    ];
+>>>>>>> 743b2fb77ac7dad9c5de9a8744c9d8fecb710426
 
 var boat_layout = [];
 
@@ -25,7 +42,7 @@ boat name="boat-name"
         status - booked, not booked
         bookedto - who booked the seat
 */
-var table;
+
 
 class Seat {
     constructor(row, column, status, booked_to) {
@@ -49,10 +66,13 @@ function seatSelectionInit() {
     seatTakenError = document.getElementById("already_booked_seat");
     seatCountError = document.getElementById("max_booked_seat");
 
-    table = document.getElementById("seat_table");
+    var table_tere = document.getElementById("tere_table");
+    var table_nui = document.getElementById("nui_table");
 
-    createFromXML();
-    createBoatLayout(boat_layout);
+    tere_boat_layout_objects = createFromXML(tere_boat_layout);
+    createBoatLayout(tere_boat_layout_objects, table_tere);
+    nui_boat_layout_objects = createFromXML(nui_boat_layout);
+    createBoatLayout(nui_boat_layout_objects, table_nui);
 
     // adding the event to show the information about the selected seat
     document.querySelectorAll(".booked_seat, .empty_seat").forEach(selectedSeat => {
@@ -108,29 +128,31 @@ function seatSelectionInit() {
 function setHoveredContent(selectedSeat) {
     var row = parseInt(selectedSeat.getAttribute("row"));
     var column = parseInt(selectedSeat.getAttribute("column"));
-    var seat = boat_layout[row - 1][column - 1];
+    var seat = selected_boat_layout[row - 1][column - 1];
     hoverElementStatusField.innerHTML = seat.status;
     hoverElementCostField.innerHTML = seat.price;
     hoverElementLocationField.innerHTML = letterMap[row - 1] + column;
 }
 
 // function to create the seat objects from html most likely a temporary method
-function createFromXML() {
-    for (var row = 0; row < 9; row++) {
+function createFromXML(selected_boat) {
+    var boat_layout =[];
+    for (var row = 0; row < selected_boat.length; row++) {
         var row_data = [];
         for (var col = 0; col < 9; col++) {
             var current_seat;
-            if (one[row][col] == 0) current_seat = new Seat(row + 1, col + 1, "null", "null");
-            else if (one[row][col] == 2) current_seat = new Seat(row + 1, col + 1, "Booked", "null");
+            if (selected_boat[row][col] == 0) current_seat = new Seat(row + 1, col + 1, "null", "null");
+            else if (selected_boat[row][col] == 2) current_seat = new Seat(row + 1, col + 1, "Booked", "null");
             else current_seat = new Seat(row + 1, col + 1, "Available", "null");
             row_data.push(current_seat);
         }
         boat_layout.push(row_data);
     }
+    return boat_layout;
 }
 
 // function to create the boat structure with html dynamically
-function createBoatLayout(boatStructure) {
+function createBoatLayout(boatStructure, table) {
     var no_seat = document.createElement("td");
     no_seat.classList.add("seat");
 
