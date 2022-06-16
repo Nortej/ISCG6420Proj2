@@ -84,9 +84,18 @@ function validatePage2(){
 }
 
 function clearInputs(){
+    //clear page 1
     var inputFields = document.querySelectorAll("#fName, #lName, #email, #contactNumber, #seat-count, #trip-date, #trip-time-count");
-    for (var i = 0; i < inputFields.length; i++){
+    for(var i = 0; i < inputFields.length; i++){
         inputFields[i].value = '';
     }
-    
+
+    //clear seats
+
+    //clear menu
+    var menuTable = document.getElementsByTagName("table")[2];
+    for(var i =0; i<menuTable.rows.length; i++){
+        document.getElementById("sliderValue" + i).innerHTML = "0";
+        document.getElementById("slider" + i).value = 0;
+    }
 }
