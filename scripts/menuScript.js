@@ -8,8 +8,9 @@ function Item(Image, itemName, Price, Type){
 //array of menu item objects
 var itemArray =[]
 
-//getting xml
+//xml stuff
 function menuXML(){
+    //getting xml
     if(window.XMLHttpRequest)
     {
         xmlhttp=new XMLHttpRequest();
