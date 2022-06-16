@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nui-boat>
+    <booked-seat>
+        <row>3</row>
+        <col>1</col>
+        <status>2</status>
+    <booked-seat>
+    <booked-seat>
+        <row>3</row>
+        <col>2</col>
+        <status>2</status>
+    </booked-seat>
+    <booked-seat>
+        <row>3</row>
+        <col>3</col>
+        <status>2</status>
+    </booked-seat>
+    <booked-seat>
+        <row>3</row>
+        <col>7</col>
+        <status>2<status>
+    </booked-seat>
+
+    <booked-seat>
+        <row>5</row>
+        <col>0</col>
+        <status>2</status>
+    </booked-seat>
+    <booked-seat>
+        <row>5</row>
+        <col>2</col>
+        <status>2</status>
+    </booked-seat>
+    <booked-seat>
+        <row>5</row>
+        <col>3</col>
+        <status>2</status>
+    </booked-seat>
+    <booked-seat>
+        <row>5</row>
+        <col>7</col>
+    </booked-seat> ***
+    
+    <booked-seat>
+        <row>6</row>
+        <col>0</col>
+    </booked-seat>
+    <booked-seat>
+        <row>6</row>
+        <col>5</col>
+    </booked-seat>
+    <booked-seat>
+        <row>6</row>
+        <col>6</col>
+    </booked-seat>
+    <booked-seat>
+        <row>6</row>
+        <col>7</col>
+    </booked-seat>
+    <booked-seat>
+        <row>6</row>
+        <col>8</col>
+    </booked-seat>
+
+    <booked-seat>
+        <row>7</row>
+        <col>0</col>
+    </booked-seat>
+
+    <booked-seat>
+        <row>9</row>
+        <col>0</col>
+    </booked-seat>
+    <booked-seat>
+        <row>9</row>
+        <col>1</col>
+    </booked-seat>
+</nui-boat>
