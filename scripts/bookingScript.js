@@ -15,6 +15,8 @@ function goBack() {
     setVisibility(windowElements[currentPageIndex], false);
     currentPageIndex--;
     setVisibility(windowElements[currentPageIndex], true);
+
+    if (currentPageIndex != 3){document.getElementById("forward").innerHTML = "Forwards"}
 }
 
 // moves forward to the next page
@@ -58,6 +60,7 @@ function goForwards() {
     //gets inputs of all pages for confirmation
     if(currentPageIndex == 3){
         getInputs();
+        document.getElementById("forward").innerHTML = "Submit";
     }
 }
 
