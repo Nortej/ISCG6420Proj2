@@ -229,3 +229,6 @@ h2 {
 input.invalid{
     background-color: #ffdddd;
 }
+select.invalid{
+    background-color: #ffdddd;
+}

@@ -20,8 +20,12 @@ function goBack() {
 // moves forward to the next page
 function goForwards() {
     if (currentPageIndex >= numberOfWindows - 1) return;
+    //doesn't let you continue if inputs are incomplete
     if (currentPageIndex == 0){
-        if (!validatePage1()) return;
+        if (!validatePage1()) {
+            alert("The inputs are incomplete!");
+            return;
+        }
     }
     setVisibility(windowElements[currentPageIndex], false);
     currentPageIndex++;
