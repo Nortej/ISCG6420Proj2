@@ -312,7 +312,7 @@ class GameWindow extends IWindow {
     Restart() {
         this.scoreText.SetText("Score: 0");
         this.score = 0;
-        this.time = 12;//gameObject.gameLength * 60 + 10; debug
+        this.time = gameObject.gameLength * 60 + 10;
         this.playerObject.Restart();
         this.bugManager.Restart();
     }
