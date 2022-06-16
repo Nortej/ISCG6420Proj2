@@ -11,7 +11,7 @@
         <script src="scripts/boatVerification.js"></script>
         <script src="scripts/tripValidation.js"></script>
     </head>
-    <body onload="init(), onPageLoad(), seatSelectionInit(), showMenu()">
+    <body onload="init(), onPageLoad(), seatSelectionInit(), menuXML()">
         <div id="background-image"></div>
         <div id="main_body">
             <h1 id="heading">Wakatipu Boat Adventure</h1>
@@ -58,21 +58,23 @@
                         <input type="date" id="trip-date"/>
                     </div>
 
-                    <div class="form-field">
-                        <label for="trip-time-count">Trip Time</label>
-                        <select id="trip-time-count" disabled>
-                            <option value="10">10am</option>
-                            <option value="11">11am</option>
-                            <option value="12">12pm</option>
-                            <option value="13">1pm</option>
-                            <option value="14">2pm</option>
-                        </select>
-                    </div>
-                    <div id="weather">
-                        <h3>Weather for <br><span id="current-weather-date"></span></h3>
-                        <p>Status: <span id="weater_description"></span></p>
-                        <img id="weather_icon"/>
-                        <p id="weather_permit"></p>
+                        <div class="form-field">
+                            <label for="trip-time-count">Trip Time</label>
+                            <select id="trip-time-count">
+                                <option value=""></option>
+                                <option value="10">10am</option>
+                                <option value="11">11am</option>
+                                <option value="12">12pm</option>
+                                <option value="13">1pm</option>
+                                <option value="14">2pm</option>
+                            </select>
+                        </div>
+                        <div id="weather">
+                            <h3>Weather for <br><span id="current-weather-date"></span></h3>
+                            <p>Status: <span id="weater_description"></span></p>
+                            <img id="weather_icon"/>
+                            <p id="weather_permit"></p>
+                        </div>
                     </div>
                 </div>
                 

@@ -227,3 +227,9 @@ h2 {
     border: 5px solid white;
     border-radius: 20px 0;
 }
+input.invalid{
+    background-color: #ffdddd;
+}
+select.invalid{
+    background-color: #ffdddd;
+}

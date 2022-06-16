@@ -8,33 +8,39 @@ function Item(Image, itemName, Price, Type){
 //array of menu item objects
 var itemArray =[]
 
-//getting xml
-if(window.XMLHttpRequest)
-{
-    xmlhttp=new XMLHttpRequest();
-}
-else{
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-}
-xmlhttp.open("GET","menuData.xml", false);
-xmlhttp.send();
-XMLDoc=xmlhttp.responseXML;
-var x=XMLDoc.getElementsByTagName("Item");
+//menu xml stuff
+function menuXML(){
+    //getting xml
+    if(window.XMLHttpRequest)
+    {
+        xmlhttp=new XMLHttpRequest();
+    }
+    else{
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.open("GET","/xml/menuData.xml", false);
+    xmlhttp.send();
+    XMLDoc=xmlhttp.responseXML;
+    var x=XMLDoc.getElementsByTagName("Item");
 
-var IName ='';
-var IImage='';
-var IPrice=0;
-var IType="";
+    var IName ='';
+    var IImage='';
+    var IPrice=0;
+    var IType="";
 
-//adding info from xml to item object, then to array
-for(var i=0; i<x.length;i++){
-    IName = x[i].getElementsByTagName("itemName")[0].childNodes[0].nodeValue;
-    IImage = x[i].getElementsByTagName("Image")[0].childNodes[0].nodeValue;
-    IPrice = x[i].getElementsByTagName("Price")[0].childNodes[0].nodeValue;
-    IType = x[i].getElementsByTagName("Type")[0].childNodes[0].nodeValue;
-    var item = new Item(IImage,IName, IPrice, IType);
-    itemArray[i]=item;
+    //adding info from xml to item object, then to array
+    for(var i=0; i<x.length;i++){
+        IName = x[i].getElementsByTagName("itemName")[0].childNodes[0].nodeValue;
+        IImage = x[i].getElementsByTagName("Image")[0].childNodes[0].nodeValue;
+        IPrice = x[i].getElementsByTagName("Price")[0].childNodes[0].nodeValue;
+        IType = x[i].getElementsByTagName("Type")[0].childNodes[0].nodeValue;
+        var item = new Item(IImage,IName, IPrice, IType);
+        itemArray[i]=item;
+    }
+
+    showMenu();
 }
+
 
 //dynamically showing the menu table
 function showMenu(){

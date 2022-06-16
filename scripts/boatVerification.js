@@ -65,8 +65,12 @@ function onPageLoad() {
             var canVisit = weatherObject["canVisit"];
             timeSelectionNode.disabled = !canVisit;
             if (canVisit) weatherPermitNode.innerHTML = "Weather Safe<br/>Select a Time";
-            else weatherPermitNode.innerHTML = "Not Safe to Sail.<br/>Select Another Date";
-        } else {
+            else {
+                weatherPermitNode.innerHTML = "Not Safe to Sail.<br/>Select Another Date";
+                timeSelectionNode.selectedIndex = 0;
+            }
+        } 
+        else {
             timeSelectionNode.disabled = false;
         }
     });

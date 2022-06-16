@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tere-boat>
+    <booked-seat>
+        <row>2</row>
+        <col>2</col>
+    </booked-seat>
+
+    <booked-seat>
+        <row>3</row>
+        <col>2</col>
+    </booked-seat>
+</tere-boat>

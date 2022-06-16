@@ -6,7 +6,7 @@ function getInputs(){
     if (document.getElementById("selected-boat").value == "tere"){
         document.getElementById("DtBoat").innerHTML = "Tere Boat";
     } else{document.getElementById("DtBoat").innerHTML = "Nui Boat";}
-    
+    document.getElementById("DtPeopleCount").innerHTML = document.getElementById("seat-count").value;
     document.getElementById("DtDateTime").innerHTML = document.getElementById("trip-time-count").value + ':00, ' + document.getElementById("trip-date").value;
     
     //page2 seats
@@ -50,4 +50,27 @@ function getInputs(){
     var stringFoodCost = document.getElementById("finalMenuTotal").innerHTML;
     document.getElementById("DtTotalCost").innerHTML = 
     '$' + (parseFloat(stringSeatCost.substring(1, stringSeatCost.length)) + parseFloat(stringFoodCost.substring(1, stringFoodCost.length)));
+}
+
+//this checks if the inputs on page 1 are filled out
+function validatePage1(){
+    var y, i, valid = true;
+    y = windowElements[currentPageIndex].querySelectorAll("select, input");
+    for(i=0; i<y.length; i++){
+        y[i].classList.remove("invalid");
+        if(y[i].value==''){
+            y[i].classList.add("invalid");
+            valid = false;
+        }
+    }
+    return valid;
+}
+//this checks that the inputs of page 2 are filled out
+function validatePage2(){
+    var valid = true;
+    var selected_seats = Object.keys(currentlySelectedSeats);
+    if (!(selected_seats.length -2 == currentlySelectedSeats.max_seat_count)){
+        valid = false;
+    }
+    return valid;
 }
