@@ -6,7 +6,7 @@ function getInputs(){
     if (document.getElementById("selected-boat").value == "tere"){
         document.getElementById("DtBoat").innerHTML = "Tere Boat";
     } else{document.getElementById("DtBoat").innerHTML = "Nui Boat";}
-    
+    document.getElementById("DtPeopleCount").innerHTML = document.getElementById("seat-count").value;
     document.getElementById("DtDateTime").innerHTML = document.getElementById("trip-time-count").value + ':00, ' + document.getElementById("trip-date").value;
     
     //page2 seats
@@ -50,4 +50,16 @@ function getInputs(){
     var stringFoodCost = document.getElementById("finalMenuTotal").innerHTML;
     document.getElementById("DtTotalCost").innerHTML = 
     '$' + (parseFloat(stringSeatCost.substring(1, stringSeatCost.length)) + parseFloat(stringFoodCost.substring(1, stringFoodCost.length)));
+}
+
+function validatePage1(){
+    var y, i, valid = true;
+    y = windowElements[currentPageIndex].getElementsByTagName("input");
+    for(i=0; i<y.length; i++){
+        if(y[i].value==''){
+            y[i].className += " invalid";
+            valid = false;
+        }
+    }
+    return valid;
 }

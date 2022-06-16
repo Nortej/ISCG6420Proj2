@@ -20,7 +20,9 @@ function goBack() {
 // moves forward to the next page
 function goForwards() {
     if (currentPageIndex >= numberOfWindows - 1) return;
-
+    if (currentPageIndex == 0){
+        if (!validatePage1()) return;
+    }
     setVisibility(windowElements[currentPageIndex], false);
     currentPageIndex++;
     setVisibility(windowElements[currentPageIndex], true);
