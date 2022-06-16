@@ -37,7 +37,7 @@ boat name="boat-name"
         status - booked, not booked
         bookedto - who booked the seat
 */
-//xml stuff
+//boat booked seats xml stuff
 function boatXML(){
     var xmlhttp;
     //getting xml for tere-boat
@@ -47,21 +47,21 @@ function boatXML(){
     else{
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    //tere boat
+    //get tere boat xml
     xmlhttp.open("GET", "/xml/tere-boat-booked.xml", false);
     xmlhttp.send();
     XMLDoc = xmlhttp.responseXML;
     var tere_booked = XMLDoc.getElementsByTagName("booked-seat");
     addBookedSeats(tere_booked, tere_boat_layout);
 
-    //nui boat
+    //get nui boat xml
     xmlhttp.open("GET", "/xml/nui-boat-booked.xml", false);
     xmlhttp.send();
     XMLDoc = xmlhttp.responseXML;
     var nui_booked = XMLDoc.getElementsByTagName("booked-seat");
     addBookedSeats(nui_booked, nui_boat_layout);
 }
-
+//adds the booked seats from xml to boat layouts
 function addBookedSeats(booked_seats, booked_boat_layout){
     var SRow = 0;
     var SCol = 0;
