@@ -34,7 +34,7 @@ function goForwards() {
             return;
         }
     }
-
+    
     setVisibility(windowElements[currentPageIndex], false);
     currentPageIndex++;
     setVisibility(windowElements[currentPageIndex], true);
