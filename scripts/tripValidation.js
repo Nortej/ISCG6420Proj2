@@ -13,7 +13,7 @@ function getInputs(){
     //loop to display seat numbers
     var selected_seats = Object.keys(currentlySelectedSeats);
     for(i=2; i< selected_seats.length; i++){
-        document.getElementById("DtSeats").innerHTML = "";
+        document.getElementById("DtSeats").innerHTML = ""; //set to nothing in case user goes back
         document.getElementById("DtSeats").innerHTML += selected_seats[i];
         if (i != (selected_seats.length -1) ){
             document.getElementById("DtSeats").innerHTML += ", ";
@@ -35,7 +35,7 @@ function getInputs(){
     var menuTable = document.getElementsByTagName("table")[2];
     var confirmTable = document.getElementById('menuConfirm');
     if (confirmTable.rows.length == 6){
-        //delete any previous table rows
+        //delete any previous table rows in case user goes back
         for(i = 0; i < 6; i++){
             confirmTable.deleteRow(0);
         }
