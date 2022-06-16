@@ -16,7 +16,7 @@ if(window.XMLHttpRequest)
 else{
     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 }
-xmlhttp.open("GET","menuData.xml", false);
+xmlhttp.open("GET","xml/menuData.xml", false);
 xmlhttp.send();
 XMLDoc=xmlhttp.responseXML;
 var x=XMLDoc.getElementsByTagName("Item");
