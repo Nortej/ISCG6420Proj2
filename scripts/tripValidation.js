@@ -83,6 +83,7 @@ function validatePage2(){
     return valid;
 }
 
+//this clears all user-made inputs from each window
 function clearInputs(){
     //clear page 1
     var inputFields = document.querySelectorAll("#fName, #lName, #email, #contactNumber, #seat-count, #trip-date, #trip-time-count");
