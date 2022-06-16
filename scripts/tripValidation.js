@@ -99,4 +99,5 @@ function clearInputs(){
         document.getElementById("sliderValue" + i).innerHTML = "0";
         document.getElementById("slider" + i).value = 0;
     }
+    document.getElementById("menuTotal").innerHTML = "$0";
 }
