@@ -3,6 +3,13 @@ var seatCountError, seatTakenError;
 var currentlySelectedSeats = {seat_count: 0, max_seat_count: 10};
 var letterMap = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"];
 
+
+/*layout of boats:
+    0=no seat
+    1=available
+    2=booked
+booked seats are dynamically added from the xml file
+*/
 var tere_boat_layout = [[0, 1, 1, 1, 0, 1, 1, 1, 0],
                      [0, 1, 1, 1, 0, 1, 1, 1, 0], 
                      [1, 1, 1, 1, 0, 1, 1, 1, 1],
