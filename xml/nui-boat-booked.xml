@@ -3,7 +3,7 @@
     <booked-seat>
         <row>3</row>
         <col>1</col>
-    <booked-seat>
+    </booked-seat>
     <booked-seat>
         <row>3</row>
         <col>2</col>
@@ -32,7 +32,7 @@
     <booked-seat>
         <row>5</row>
         <col>7</col>
-    </booked-seat> ***
+    </booked-seat>
     
     <booked-seat>
         <row>6</row>
