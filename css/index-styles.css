@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    background-color: rgb(172, 234, 255);
+    overflow-x: hidden;
+}
+
+h2 {
+    font-size: 4em;
+}
+
+#background-gradient {
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background: linear-gradient(156deg, rgba(35,197,251,1) 0%, rgba(219,243,159,1) 50%, rgba(241,173,14,1) 100%);
+    background-size: cover;
+    position: fixed;
+    z-index: -1;
+}
+
+#page-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    padding: 10px;
+    background: rgb(35,197,251);
+    background: linear-gradient(156deg, rgba(35,197,251,1) 0%, rgba(219,243,159,1) 50%, rgba(241,173,14,1) 100%);
+}
+
+#header-content {
+    background-image: url("../images/index-banner.png");
+    background-size: cover;
+    padding: 20px;
+    border: 4px solid black;
+}
+
+#header-text {
+   background-color: rgba(255, 255, 255, 0.7);
+    border: 8px solid black;
+    border-radius: 8px;
+    margin-left: auto;
+    width: 5em;
+    font-size: 5em;
+}
+ 
+main {
+    background-color: rgba(20, 20, 20, 0.2);
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 30px 0px;
+    margin: 100px 0;
+}
+
+.task {
+    background-color: rgba(35,197,251,1);
+    border: 4px solid black;
+    border-radius: 15px;
+    width: 20%;
+    min-width: 500px;
+    min-height: 300px;
+    padding: 26px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 1.2s cubic-bezier(0.2, 1.06, 1, 1);
+}
+
+.task:hover {
+    transform: scale(1.3, 1.3);
+    box-shadow: 10px 10px rgba(0, 0, 0, 0.3);
+    background-color: white;
+}
+
+.task * {
+    margin: 15px;
+}
+
+.task img {
+    width: 90%;
+    height: auto;
+    border: 3px solid black;
+}
+
+a {
+    background-color: white;
+    color: #F46036;
+    border: 3px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    transition: all 1s;
+}
+
+a:visited {
+}
+
+.task:hover a {
+    background-color: rgba(35,197,251,1);
+    color: white;
+}
+
+a:hover {
+    font-size: x-large;
+    background-color: white;
+}
+
+footer {
+    bottom: 0;
+    background-color: rgb(70, 70, 70);
+    width: 100%;
+}
+
+.footer-text {
+    color: white;
+    margin: 0;
+    padding: 40px;
+    text-align: right;
+}

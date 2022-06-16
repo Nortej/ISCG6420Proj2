@@ -37,6 +37,8 @@ class CanvasObject {
         this.volume = 99;
         this.collectSound = new Sound("collect.mp3", canvasID);
         this.hitSound = new Sound("bug_hit.mp3", canvasID);
+        this.startSound = new Sound("start_sound.mp3", canvasID);
+        this.endSound = new Sound("end_sound.mp3", canvasID);
 
         this.gameLength = 4;
 
@@ -105,6 +107,8 @@ class CanvasObject {
         this.volume = newVolume;
         this.collectSound.SetVolume(this.volume);
         this.hitSound.SetVolume(this.volume);
+        this.startSound.SetVolume(this.volume);
+        this.endSound.SetVolume(this.volume);
     }
 
     // updates the length of the game
@@ -117,6 +121,7 @@ class CanvasObject {
         this.isInMenu = false;
         this.isPaused = false;
         this.isInGameOverMenu = false;
+        this.startSound.Play();
         this.gameWindow.Restart();
     }
 
@@ -140,7 +145,7 @@ class CanvasObject {
     
     // Updates the position of elements on screen
     _UpdatePosition() {
-        if (!this.isPaused && !this.isInMenu && !this.isInGameOverMenu) this.gameWindow.UpdatePosition();
+        if (!this.isPaused && !this.isInMenu && !this.isInGameOverMenu && !this.isInOptionsMenu) this.gameWindow.UpdatePosition();
     }
 }
 
@@ -217,7 +222,7 @@ class GameWindow extends IWindow {
         this.bugCount = 28
         this.bugManager = new BugManager(this.bugCount, _SCREEN_UPDATE_INTERVAL);
         this.score = 0;
-        this.highScore = -1;
+        this.highScore = 0;
         this.time = 0;
 
         this.createShapes();
@@ -305,6 +310,7 @@ class GameWindow extends IWindow {
         } else {
             gameObject.isInGameOverMenu = true;
             gameObject.gameOverWindow.SetScore(this.score, this.highScore);
+            gameObject.endSound.Play();
             if (this.highScore < this.score) this.highScore = this.score;
         }
     }
@@ -412,7 +418,7 @@ class OptionWindow extends IWindow {
         this.volumeSlider = new Slider(this.width / 2, 125, this.width / 5, 20, "yellow", "yellow", 0, "Volume: ", 100, 0, 100);
         this.shapes.push(this.volumeSlider);
 
-        this.gameLengthSlider = new Slider(this.width / 2, 175, this.width / 5, 20, "yellow", "yellow", 0, "Game Length: ", 4, 1, 5);
+        this.gameLengthSlider = new Slider(this.width / 2, 175, this.width / 5, 20, "yellow", "yellow", 0, "Game Length: ", 4, 1, 6);
         this.shapes.push(this.gameLengthSlider);
 
         this.backButton = new Button(50, 50, 50, 50, "<", 30, "Arial", "#000000aa", "white", 5);

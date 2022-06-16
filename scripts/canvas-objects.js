@@ -263,14 +263,24 @@ class Player extends CanvasImage {
         this.tail = new CanvasImage(this.x, this.y, "playerTail");
         this.tail.normal = document.getElementById("playerTail");
         this.tail.flipped = document.getElementById("playerTailFlipped");
-        this.tail.leftOffset = this.width + this.xSpeed / 2;
-        this.tail.rightOffset = -(this.tail.leftOffset + this.width) + this.xSpeed;
+        this.tail.leftOffset = -this.tail.width + this.width / 2;
+        this.tail.rightOffset = this.width / 2;
         this.tail.yOffset = this.height / 2 - this.tail.height / 2;
 
         this.catchNet = new Rectangle(this.x, this.y, this.net.width - this.width / 2, this.net.height * 2, "blue", "blue", 0);
-        this.catchNet.rightOffset = this.width + this.xSpeed / 2;
+        this.catchNet.rightOffset = this.catchNet.width + this.xSpeed / 2;
         this.catchNet.leftOffset = -(this.catchNet.width + this.xSpeed / 2);
         this.catchNet.yOffset = this.height / 2 - this.catchNet.height / 2;
+
+        this.leftEye = new Arc(this.x + 2 * this.width / 5, this.y, 2, 0, 0, Math.PI * 2, false, "black", "black", 0);
+        this.leftEye.leftOffset = 2 * this.width / 5;
+        this.leftEye.rightOffset = this.width - this.leftEye.leftOffset;
+        this.leftEye.yOffset = this.height / 3 - 2;
+
+        this.rightEye = new Arc(this.x + 2 * this.width / 5, this.y, 2, 0, 0, Math.PI * 2, false, "black", "black", 0);
+        this.rightEye.leftOffset = 7 * this.width / 10;
+        this.rightEye.rightOffset = this.width - this.rightEye.leftOffset;
+        this.rightEye.yOffset = this.height / 3 - 7;
 
         this.timeSinceLastSwing = 3.1;
         this.baseNetRotation = Math.PI / 4;
@@ -283,17 +293,20 @@ class Player extends CanvasImage {
         if (!this.isFlipped) {
             this.imageElement = this.flipped;
             this.tail.imageElement = this.tail.flipped;
-            super.Draw(context);
             this.tail.Draw(context);
+            super.Draw(context);
         } else {
             this.imageElement = this.normal;
             this.tail.imageElement = this.tail.normal;
-            super.Draw(context);
             this.tail.Draw(context);
+            super.Draw(context);
         }
-  
+
+        this.leftEye.Draw(context);
+        this.rightEye.Draw(context);
+
         var contextXOffset = this.x + this.width / 2;
-        var contextYOffset = this.y + this.height / 2;
+        var contextYOffset = this.y + this.height / 1.4;
         context.translate(contextXOffset, contextYOffset);
         context.rotate(this.netRotation);
 
@@ -323,15 +336,21 @@ class Player extends CanvasImage {
         this.timeSinceLastSwing += this.deltaTime;
 
         if (this.isFlipped) {
-            this.tail.x = this.x + this.tail.rightOffset;
+            this.tail.x = this.x + this.tail.leftOffset;
             this.catchNet.x = this.x + this.catchNet.rightOffset;
+            this.leftEye.x = this.x + this.leftEye.leftOffset + this.netRotation * 2;
+            this.rightEye.x = this.x + this.rightEye.leftOffset + this.netRotation * 2;
         }
         else {
-            this.tail.x = this.x + this.tail.leftOffset;
+            this.tail.x = this.x + this.tail.rightOffset;
             this.catchNet.x = this.x + this.catchNet.leftOffset;
+            this.leftEye.x = this.x + this.leftEye.rightOffset + this.netRotation * 2;
+            this.rightEye.x = this.x + this.rightEye.rightOffset + this.netRotation * 2;
         }
         this.tail.y = this.y + this.tail.yOffset;
         this.catchNet.y = this.y + this.catchNet.yOffset;
+        this.leftEye.y = this.y + this.leftEye.yOffset;
+        this.rightEye.y = this.y + this.rightEye.yOffset;
     }
 
 
