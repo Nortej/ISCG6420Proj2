@@ -21,7 +21,8 @@ function goBack() {
 
 // moves forward to the next page
 function goForwards() {
-    if (currentPageIndex >= numberOfWindows - 1) return;
+    //if (currentPageIndex >= numberOfWindows - 1) return;
+    if (currentPageIndex != 3){document.getElementById("forward").innerHTML = "Forwards"}
     //doesn't let user continue if page 1 inputs are incomplete//
     if (currentPageIndex == 0){
         if (!validatePage1()) {
@@ -35,6 +36,18 @@ function goForwards() {
             alert("You must select enough seats for those on the trip!");
             return;
         }
+    }
+
+    //display booked message and send user back to page1
+    if(currentPageIndex == 3){
+        //set selected seats to booked - save locally
+        //set input fields to blank
+        alert("You have successfully booked! Payment is required on site before you board.");
+        //sends user to page one
+        setVisibility(windowElements[currentPageIndex], false);
+        currentPageIndex = 0;
+        setVisibility(windowElements[currentPageIndex], true);
+        return;
     }
     
     setVisibility(windowElements[currentPageIndex], false);
