@@ -89,6 +89,20 @@ class CanvasText extends Shape {
     }
 }
 
+class CanvasImage extends Shape {
+    constructor(x, y, imageID) {
+        super(x, y, 0, 0, 0);
+
+        this.imageElement = document.getElementById(imageID);
+        this.width = this.imageElement.width;
+        this.height = this.imageElement.height;
+    }
+
+    Draw(context) {
+        context.drawImage(this.imageElement, this.x, this.y, this.width, this.height);
+    }
+}
+
 class Arc extends Shape {
     constructor(x, y, radius, rotation, startAngle, endAngle, isCounterClockwise, fillColor, strokeColor, borderWidth) {
         super(x, y, fillColor, strokeColor, borderWidth);
@@ -228,9 +242,11 @@ class Bug extends Arc {
     }
 }
 
-class Player extends Rectangle {
-    constructor(screenUpdatePeriod) {
-        super(20, 20, 50, 50, "red", "red", 5);
+class Player extends CanvasImage {
+    constructor(screenUpdatePeriod, imageID, flippedImageID) {
+        super(20, 20, imageID);
+        this.flipped = document.getElementById(flippedImageID);
+        this.normal = document.getElementById(imageID);
 
         this.deltaTime = screenUpdatePeriod;
 
@@ -239,12 +255,19 @@ class Player extends Rectangle {
 
         this.isFlipped = true;
 
-        this.net = new Rectangle(0, -5, 100, 10, "yellow", "yellow", 0);
+        this.net = new CanvasImage(0, -5, "playerNet");
         this.net.rightOffset = this.width + this.xSpeed / 2;
-        this.net.leftOffset = - (this.net.rightOffset + this.width) + this.xSpeed;
+        this.net.leftOffset = -(this.net.rightOffset + this.width) + this.xSpeed;
         this.net.yOffset = this.height / 2 - this.net.height / 2;
 
-        this.catchNet = new Rectangle(this.x, this.y, this.net.width - 30, this.net.height, "blue", "blue", 0);
+        this.tail = new CanvasImage(this.x, this.y, "playerTail");
+        this.tail.normal = document.getElementById("playerTail");
+        this.tail.flipped = document.getElementById("playerTailFlipped");
+        this.tail.leftOffset = this.width + this.xSpeed / 2;
+        this.tail.rightOffset = -(this.tail.leftOffset + this.width) + this.xSpeed;
+        this.tail.yOffset = this.height / 2 - this.tail.height / 2;
+
+        this.catchNet = new Rectangle(this.x, this.y, this.net.width - this.width / 2, this.net.height * 2, "blue", "blue", 0);
         this.catchNet.rightOffset = this.width + this.xSpeed / 2;
         this.catchNet.leftOffset = -(this.catchNet.width + this.xSpeed / 2);
         this.catchNet.yOffset = this.height / 2 - this.catchNet.height / 2;
@@ -257,7 +280,17 @@ class Player extends Rectangle {
     }
 
     Draw(context) {
-        super.Draw(context);
+        if (!this.isFlipped) {
+            this.imageElement = this.flipped;
+            this.tail.imageElement = this.tail.flipped;
+            super.Draw(context);
+            this.tail.Draw(context);
+        } else {
+            this.imageElement = this.normal;
+            this.tail.imageElement = this.tail.normal;
+            super.Draw(context);
+            this.tail.Draw(context);
+        }
   
         var contextXOffset = this.x + this.width / 2;
         var contextYOffset = this.y + this.height / 2;
@@ -289,8 +322,15 @@ class Player extends Rectangle {
         }
         this.timeSinceLastSwing += this.deltaTime;
 
-        if (this.isFlipped) this.catchNet.x = this.x + this.catchNet.rightOffset;
-        else this.catchNet.x = this.x + this.catchNet.leftOffset;
+        if (this.isFlipped) {
+            this.tail.x = this.x + this.tail.rightOffset;
+            this.catchNet.x = this.x + this.catchNet.rightOffset;
+        }
+        else {
+            this.tail.x = this.x + this.tail.leftOffset;
+            this.catchNet.x = this.x + this.catchNet.leftOffset;
+        }
+        this.tail.y = this.y + this.tail.yOffset;
         this.catchNet.y = this.y + this.catchNet.yOffset;
     }
 

@@ -224,7 +224,7 @@ class GameWindow extends IWindow {
     }
 
     createShapes() {
-        this.playerObject = new Player(_SCREEN_UPDATE_INTERVAL);
+        this.playerObject = new Player(_SCREEN_UPDATE_INTERVAL, "player", "playerFlipped");
         this.playerObject.xBound = this.width - this.playerObject.width;
         this.playerObject.yBound = this.height - this.playerObject.height - 75;
 
@@ -255,7 +255,7 @@ class GameWindow extends IWindow {
         this.timeText = new CanvasText(30, 30, "Time: 0", "20px Arial", "left", "black", "black", 0);
         this.shapes.push(this.timeText);
         this.pauseButton = new Button(this.width - 50, 50, 50, 80, "||", 30, "Arial", "#000000aa", "white", 5);
-        this.shapes.push(this.pauseButton);
+        this.shapes.push(this.pauseButton); 
     }
 
     Draw() {
