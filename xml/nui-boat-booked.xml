@@ -3,38 +3,31 @@
     <booked-seat>
         <row>3</row>
         <col>1</col>
-        <status>2</status>
     <booked-seat>
     <booked-seat>
         <row>3</row>
         <col>2</col>
-        <status>2</status>
     </booked-seat>
     <booked-seat>
         <row>3</row>
         <col>3</col>
-        <status>2</status>
     </booked-seat>
     <booked-seat>
         <row>3</row>
         <col>7</col>
-        <status>2<status>
     </booked-seat>
 
     <booked-seat>
         <row>5</row>
         <col>0</col>
-        <status>2</status>
     </booked-seat>
     <booked-seat>
         <row>5</row>
         <col>2</col>
-        <status>2</status>
     </booked-seat>
     <booked-seat>
         <row>5</row>
         <col>3</col>
-        <status>2</status>
     </booked-seat>
     <booked-seat>
         <row>5</row>
