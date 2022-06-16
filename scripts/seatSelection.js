@@ -5,8 +5,8 @@ var letterMap = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"
 
 var tere_boat_layout = [[0, 1, 1, 1, 0, 1, 1, 1, 0],
                      [0, 1, 1, 1, 0, 1, 1, 1, 0], 
-                     [1, 1, 2, 1, 0, 1, 1, 1, 1],
-                     [1, 1, 2, 1, 0, 1, 1, 1, 1],
+                     [1, 1, 1, 1, 0, 1, 1, 1, 1],
+                     [1, 1, 1, 1, 0, 1, 1, 1, 1],
                      [1, 1, 1, 1, 0, 1, 1, 1, 1],
                      [1, 1, 1, 1, 0, 1, 1, 1, 1],
                      [1, 1, 1, 1, 0, 1, 1, 1, 1],
@@ -17,19 +17,18 @@ var tere_boat_layout = [[0, 1, 1, 1, 0, 1, 1, 1, 0],
 var nui_boat_layout = [[0, 0, 1, 1, 0, 1, 1, 0, 0],
                         [0, 0, 1, 1, 0, 1, 1, 0, 0],
                         [0, 1, 1, 1, 0, 1, 1, 1, 0],
-                        [0, 2, 2, 2, 0, 1, 1, 2, 0],
-                        [1, 1, 1, 1, 0, 1, 1, 2, 1],
-                        [2, 1, 2, 2, 0, 1, 1, 2, 1],
-                        [2, 1, 1, 1, 0, 2, 2, 2, 2],
-                        [2, 1, 1, 1, 0, 1, 1, 1, 1],
+                        [0, 1, 1, 1, 0, 1, 1, 1, 0],
                         [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                        [2, 2, 1, 1, 0, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
                         [1, 1, 1, 1, 0, 1, 1, 1, 1],
                         [0, 1, 1, 1, 0, 1, 1, 1, 0],
                         [0, 1, 1, 1, 0, 1, 1, 1, 0]
                     ];
 
-var boat_layout = [];
 
 /*
 XML FORMAT
@@ -38,6 +37,42 @@ boat name="boat-name"
         status - booked, not booked
         bookedto - who booked the seat
 */
+//xml stuff
+function boatXML(){
+    var xmlhttp;
+    //getting xml for tere-boat
+    if(window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest();
+    }
+    else{
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    //tere boat
+    xmlhttp.open("GET", "/xml/tere-boat-booked.xml", false);
+    xmlhttp.send();
+    XMLDoc = xmlhttp.responseXML;
+    var tere_booked = XMLDoc.getElementsByTagName("booked-seat");
+    addBookedSeats(tere_booked, tere_boat_layout);
+
+    //nui boat
+    xmlhttp.open("GET", "/xml/nui-boat-booked.xml", false);
+    xmlhttp.send();
+    XMLDoc = xmlhttp.responseXML;
+    var nui_booked = XMLDoc.getElementsByTagName("booked-seat");
+    addBookedSeats(nui_booked, nui_boat_layout);
+}
+
+function addBookedSeats(booked_seats, booked_boat_layout){
+    var SRow = 0;
+    var SCol = 0;
+
+    //adding booked info to the tere-boat layout
+    for (var i=0; i<booked_seats.length; i++){
+        SRow = booked_seats[i].getElementsByTagName("row")[0].childNodes[0].nodeValue;
+        SCol = booked_seats[i].getElementsByTagName("col")[0].childNodes[0].nodeValue;
+        booked_boat_layout[SRow][SCol] = 2;
+    }
+}
 
 
 class Seat {
@@ -65,6 +100,7 @@ function seatSelectionInit() {
 
     var table_tere = document.getElementById("tere_table");
     var table_nui = document.getElementById("nui_table");
+    boatXML();
 
     tere_boat_layout_objects = createFromXML(tere_boat_layout);
     createBoatLayout(tere_boat_layout_objects, table_tere);
