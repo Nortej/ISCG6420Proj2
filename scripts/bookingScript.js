@@ -20,16 +20,19 @@ function goBack() {
 // moves forward to the next page
 function goForwards() {
     if (currentPageIndex >= numberOfWindows - 1) return;
-    //doesn't let you continue if inputs are incomplete
+    //doesn't let you continue if page 1 inputs are incomplete
     if (currentPageIndex == 0){
         if (!validatePage1()) {
             alert("The inputs are incomplete!");
             return;
         }
     }
+
     setVisibility(windowElements[currentPageIndex], false);
     currentPageIndex++;
     setVisibility(windowElements[currentPageIndex], true);
+
+    //sets the displayed boat layout to the selected boat
     if(currentPageIndex == 1){
         var boat_selection = document.getElementById("selected-boat").value;
         if(boat_selection == 'tere'){
@@ -42,9 +45,10 @@ function goForwards() {
             document.getElementById("nui_table").style.display = "block";
             document.getElementById("tere_table").style.display = "none";
         }
-
+        //sets the max seats selectable to that of the seat-count input
         currentlySelectedSeats.max_seat_count = parseInt(document.getElementById("seat-count").value);
     }
+    //gets inputs of all pages for confirmation
     if(currentPageIndex == 3){
         getInputs();
     }
