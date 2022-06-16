@@ -82,3 +82,11 @@ function validatePage2(){
     }
     return valid;
 }
+
+function clearInputs(){
+    var inputFields = document.querySelectorAll("#fName, #lName, #email, #contactNumber, #seat-count, #trip-date, #trip-time-count");
+    for (var i = 0; i < inputFields.length; i++){
+        inputFields[i].value = '';
+    }
+    
+}
