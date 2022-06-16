@@ -1,11 +1,11 @@
 body {
     background-color: #58819fd8;
+    margin: 0;
 }
 
 #main_body {
-    height: 80vh;
-    display: flex;
-    align-items: center;
+    width: 80vw;
+    margin: 100px auto;
 }
 
 #background-image {
@@ -13,9 +13,10 @@ body {
     background-image: url("../images/lake_image.jpeg");
     background-size: cover;
     filter: blur(8px);
-    width: 99vw;
-    height: 99vh;
+    width: 100%;
+    height: 100%;
     z-index: -1;
+    top: 0;
 }
 
 /* Defining styles for text */
