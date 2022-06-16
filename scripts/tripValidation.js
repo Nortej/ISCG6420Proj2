@@ -52,7 +52,7 @@ function getInputs(){
     '$' + (parseFloat(stringSeatCost.substring(1, stringSeatCost.length)) + parseFloat(stringFoodCost.substring(1, stringFoodCost.length)));
 }
 
-//this checks if the inputs on page 1 are filled out.
+//this checks if the inputs on page 1 are filled out
 function validatePage1(){
     var y, i, valid = true;
     y = windowElements[currentPageIndex].querySelectorAll("select, input");
@@ -62,6 +62,15 @@ function validatePage1(){
             y[i].classList.add("invalid");
             valid = false;
         }
+    }
+    return valid;
+}
+//this checks that the inputs of page 2 are filled out
+function validatePage2(){
+    var valid = true;
+    var selected_seats = Object.keys(currentlySelectedSeats);
+    if (!(selected_seats.length -2 == currentlySelectedSeats.max_seat_count)){
+        valid = false;
     }
     return valid;
 }

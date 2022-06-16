@@ -20,10 +20,17 @@ function goBack() {
 // moves forward to the next page
 function goForwards() {
     if (currentPageIndex >= numberOfWindows - 1) return;
-    //doesn't let you continue if page 1 inputs are incomplete
+    //doesn't let user continue if page 1 inputs are incomplete//
     if (currentPageIndex == 0){
         if (!validatePage1()) {
             alert("The inputs are incomplete!");
+            return;
+        }
+    }
+    //doesn't let user continue if too few seats are selected//
+    if (currentPageIndex==1){
+        if(!validatePage2()){
+            alert("You must select enough seats for those on the trip!");
             return;
         }
     }
