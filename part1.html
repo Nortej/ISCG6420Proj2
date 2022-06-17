@@ -6,80 +6,143 @@
         <link rel="stylesheet" href="css/part_1_styles.css"/>
         <link rel="stylesheet" href="css/menu.css"/>
         <script src="scripts/bookingScript.js"></script>
-        <!-- <script src="scripts/menuScript.js"></script> -->
+        <script src="scripts/menuScript.js"></script>
+        <script src="scripts/seatSelection.js"></script>
         <script src="scripts/boatVerification.js"></script>
+        <script src="scripts/tripValidation.js"></script>
     </head>
-    <body onload="init(), onPageLoad()">
-        <div id="main_form">
+    <body onload="init(), onPageLoad(), seatSelectionInit(), menuXML()">
+        <div id="background-image"></div>
+        <div id="main_body">
+            <h1 id="heading">Wakatipu Boat Adventure</h1>
             <div id="progress_buttons">
-                <button onclick="goBack()">Back</button>
-                <button onclick="goForwards()">Forwards</button>
+                <button onclick="goBack()" id="back">Back</button>
+                <button onclick="goForwards()" id="forward">Forwards</button>
             </div>
 
             <!-- Defining the window for the trip details page -->
             <div class="window hidden">
                 <h2>Trip Details</h2>
                 <div class="main_content">
-                    <div>
-                        <label for="fNname">First Name</label>
+                    <p>Enter your details into the fields below</p>
+                    <div class="form-field">
+                        <label for="fName">First Name</label>
                         <input type="text" id="fName">
                     </div>
-                    <div>
+                    <div class="form-field">
                         <label for="lName">Last Name</label>
                         <input type="text" id="lName">
                     </div>
-                    <div>
+                    <div class="form-field">
                         <label for="email">Email</label>
                         <input type="email" id="email">
                     </div>
-                    <div>
+                    <div class="form-field">
                         <label for="contactNumber">Contact Number</label>
                         <input type="tel" id="contactNumber">
                     </div>
-                    <div>
+                    <div class="form-field">
                         <label for="selected-boat">Boat Trip</label>
-                        <select>
+                        <select id="selected-boat">
                             <option value="tere">Tere Boat</option>
                             <option value="nui">Nui Boat</option>
                         </select>
                     </div>
+                    <div class="form-field">
+                        <label for="seat-count">Seat Count</label>
+                        <input type="number" id="seat-count" min="1" max="20"/>
+                    </div>
 
-                    <div>
+                    <div class="form-field">
                         <label for="trip-date">Trip Date</label>
                         <input type="date" id="trip-date"/>
                     </div>
 
-                    <div>
-                        <label for="trip-time-count">Trip Time</label>
-                        <select id="trip-time-count">
-                            <option value="10">10am</option>
-                            <option value="11">11am</option>
-                            <option value="12">12pm</option>
-                            <option value="13">1pm</option>
-                            <option value="14">2pm</option>
-                        </select>
+                        <div class="form-field">
+                            <label for="trip-time-count">Trip Time</label>
+                            <select id="trip-time-count">
+                                <option value=""></option>
+                                <option value="10">10am</option>
+                                <option value="11">11am</option>
+                                <option value="12">12pm</option>
+                                <option value="13">1pm</option>
+                                <option value="14">2pm</option>
+                            </select>
+                        </div>
+                        <div id="weather">
+                            <h3>Weather for <br><span id="current-weather-date"></span></h3>
+                            <p>Status: <span id="weater_description"></span></p>
+                            <p>Temperature: <span id="weather_temperature"></span>°C</p>
+                            <img id="weather_icon"/>
+                            <p id="weather_permit"></p>
+                        </div>
                     </div>
                 </div>
+                
             </div>
 
             <!-- Defining the window for the trip seats page-->
             <div class="window hidden">
                 <h2>Trip Seats</h2>
+                <div id="seat-selection">
+                    <div id="tere_table"></div>
+                    <div id="nui_table"></div>
+                    <div id="seat_selection_side">
+                        <div id="hover_element">
+                            <h2>Seat Details</h2>
+                            <p class="seat-info">Booking Status: <span id="hover_status"></span></p>
+                            <p class="seat-info">Seat Cost: $<span id="hover_cost"></span></p>
+                            <p class="seat-info">Seat Location: <span id="hover_location"></span></p><br/>
+                            <p class="seat-info">Seats Remaining: <span id="remaining_seats"></span></p>
+                        </div>
+                        <div class="error_info" id="already_booked_seat">
+                            <p>You cannot book seats that are already booked</p>
+                        </div>
+                        <div class="error_info" id="max_booked_seat">
+                            <p>You have reached the maximum amount of seats booked for this trip</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="window hidden">
                 <h2>Trip Food</h2>
                 <!--div for menu box-->
                 <div id="menuBox">
-                    <table id="menu">
+                    <table class="table1" id="menu">
                     </table>
                     <!--key for menu-->
-                    <div id="menuTypeKey"> 
-                        <p>| V - Vegeterian | GF - Gluten Free | EF - Egg Free |</p>
-                    </div>
+                    <p id="menuTypeKey">| V - Vegeterian | GF - Gluten Free | EF - Egg Free |</p>
+                    
                     <!--total price here - updated dynamically-->
-                    <div id="menuTotalDiv">Total:</div>
-                    <div id="menuTotal">$0.00</div>
+                    <p id="menuTotalPrice">Total: <span id="menuTotal">$0</span></p>
+                </div>
+            </div>
+
+            <!--Page for the user to confirm the booking details-->
+            <div class="window hidden">
+                <h2>Confirm Booking</h2>
+                <div id="confirmation-content">
+                    <h3>Trip Details</h3>
+                    <p>Name: <span id="DtName"></span></p>
+                    <p>Email: <span id="DtEmail"></span></p>
+                    <p>Contact Number: <span id="DtNumber"></span></p>
+                    <p>Boat: <span id="DtBoat"></span></p>
+                    <p>Date & Time: <span id="DtDateTime"></span></p>
+                
+                    <h3>Seat Details</h3>
+                    <p>No. People: <span id="DtPeopleCount"></span></p>
+                    <p>Selected Seats: <span id="DtSeats"></span></p>
+                    <p>Seat Costs: $<span id="DtSeatCost"></span></p>
+
+                    <h3>Food</h3>
+                    <div id="DtMenu">
+                        <table id="menuConfirm"></table>
+                    </div>
+                    <p>Food Total: <span id="finalMenuTotal">0.00</span></p>
+        
+                    <h3>Total Cost</h3>
+                    <p>Total: $<span id="DtTotalCost"></span></p>
                 </div>
             </div>
         </div>
