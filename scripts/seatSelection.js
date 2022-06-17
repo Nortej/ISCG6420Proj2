@@ -7,7 +7,10 @@ var letterMap = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"
     0=no seat
     1=available
     2=booked
-booked seats are dynamically added from the xml file
+
+boat_layouts are predefined with all seats as "available" as they do not change.
+The booked seats are then dynamically added from the xml file instead. 
+This makes the site load faster as less data is being pulled from external files.
 */
 var tere_boat_layout = [[0, 1, 1, 1, 0, 1, 1, 1, 0],
                      [0, 1, 1, 1, 0, 1, 1, 1, 0], 
