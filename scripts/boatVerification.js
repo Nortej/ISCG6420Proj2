@@ -1,6 +1,6 @@
 var outResponse;
 var maxDays = 4;
-var dateSelectionNode, timeSelectionNode, weatherDescriptionNode, weatherIconNode, currentDateNode, weatherPermitNode;
+var dateSelectionNode, timeSelectionNode, weatherDescriptionNode, weatherTemperatureNode, weatherIconNode, currentDateNode, weatherPermitNode;
 var todayDate = new Date();
 
 function onPageLoad() {
@@ -42,13 +42,14 @@ function onPageLoad() {
         }
     }
     
-    // // sends the request
+    // sends the request
     request.send();
 
     timeSelectionNode = document.getElementById("trip-time-count");
     dateSelectionNode = document.getElementById("trip-date");
 
     weatherDescriptionNode = document.getElementById("weater_description");
+    weatherTemperatureNode = document.getElementById("weather_temperature");
     weatherIconNode = document.getElementById("weather_icon");
     currentDateNode = document.getElementById("current-weather-date");
     weatherPermitNode = document.getElementById("weather_permit");
@@ -58,6 +59,7 @@ function onPageLoad() {
         var dateSelected = new Date(dateSelectionNode.value);
         var weatherObject = weatherForecast[dateSelected.toLocaleDateString()];
 
+        weatherTemperatureNode.innerHTML = weatherObject["temp"];
         weatherDescriptionNode.innerHTML = weatherObject["weatherName"];
         weatherIconNode.src = "http://openweathermap.org/img/wn/" + weatherObject["weatherIcon"] + "@2x.png";
         currentDateNode.innerHTML = dateSelected.toLocaleDateString();

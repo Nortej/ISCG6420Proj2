@@ -1,4 +1,4 @@
-function getInputs(){
+function getInputs() {
     //page1 booking info
     document.getElementById("DtName").innerHTML = (document.getElementById("fName").value + ' ' + document.getElementById("lName").value);
     document.getElementById("DtEmail").innerHTML = document.getElementById("email").value;
@@ -61,7 +61,7 @@ function getInputs(){
 }
 
 //this checks if the inputs on page 1 are filled out
-function validatePage1(){
+function validatePage1() {
     var y, i, valid = true;
     y = windowElements[currentPageIndex].querySelectorAll("select, input");
     for(i=0; i<y.length; i++){
@@ -74,7 +74,7 @@ function validatePage1(){
     return valid;
 }
 //this checks that the inputs of page 2 are filled out
-function validatePage2(){
+function validatePage2() {
     var valid = true;
     var selected_seats = Object.keys(currentlySelectedSeats);
     if (!(selected_seats.length -2 == currentlySelectedSeats.max_seat_count)){
@@ -84,14 +84,18 @@ function validatePage2(){
 }
 
 //this clears all user-made inputs from each window
-function clearInputs(){
+function clearInputs() {
     //clear page 1
     var inputFields = document.querySelectorAll("#fName, #lName, #email, #contactNumber, #seat-count, #trip-date, #trip-time-count");
     for(var i = 0; i < inputFields.length; i++){
         inputFields[i].value = '';
     }
 
-    //clear seats
+    //clear seats - saved locally and refreshed on browser reset
+    setSelectedSeatsTo("Booked");
+
+    // setting the weather to not be visible
+    document.getElementById("weather").style.display = "none";
 
     //clear menu
     var menuTable = document.getElementsByTagName("table")[2];
