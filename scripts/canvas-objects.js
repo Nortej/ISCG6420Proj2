@@ -32,6 +32,7 @@ class Shape {
     } 
 }
 
+// creates a rectangle that can be drawn to the screen
 class Rectangle extends Shape {
     constructor(x, y, width, height, fillColor, strokeColor, borderWidth) {
         super(x, y, fillColor, strokeColor, borderWidth);
@@ -46,6 +47,7 @@ class Rectangle extends Shape {
     }
 }
 
+// creates a ellipse that can be drawn to the screen
 class Ellipse extends Shape {
     constructor(x, y, xRadius, yRadius, rotation, startAngle, endAngle, isCounterClockwise, fillColor, strokeColor, borderWidth) {
         super(x, y, fillColor, strokeColor, borderWidth);
@@ -64,6 +66,7 @@ class Ellipse extends Shape {
     }
 }
 
+// creates a rectangle that can be drawn to the screen
 class CanvasText extends Shape {
     constructor(x, y, text, font, textAlign,  fillColor, strokeColor, borderWidth) {
         super(x, y, fillColor, strokeColor, borderWidth);
@@ -89,6 +92,7 @@ class CanvasText extends Shape {
     }
 }
 
+// creates a image that can be drawn to the screen
 class CanvasImage extends Shape {
     constructor(x, y, imageID) {
         super(x, y, 0, 0, 0);
@@ -103,6 +107,7 @@ class CanvasImage extends Shape {
     }
 }
 
+// creates a circular arc that can be drawn to the screen
 class Arc extends Shape {
     constructor(x, y, radius, rotation, startAngle, endAngle, isCounterClockwise, fillColor, strokeColor, borderWidth) {
         super(x, y, fillColor, strokeColor, borderWidth);
@@ -120,6 +125,7 @@ class Arc extends Shape {
     }
 }
 
+// creates a slider that can be drawn to the screen
 class Slider extends Rectangle {
     constructor(x, y, width, height, fillColor, strokeColor, borderWidth, sliderDescription, defaultValue, minValue, maxValue) {
         super(x, y, width, height, fillColor, strokeColor, borderWidth);
@@ -167,6 +173,7 @@ class Slider extends Rectangle {
     }
 }
 
+// creates a button that can be drawn to the screen
 class Button extends Rectangle {
     constructor(x, y, width, height, text, fontSize, font, fillColor, strokeColor, borderWidth) {
         super(x - width / 2, y - height / 2, width, height, fillColor, strokeColor, borderWidth);
@@ -180,6 +187,7 @@ class Button extends Rectangle {
     }
 }
 
+// creates a bug that can be drawn to the screen
 class Bug extends Arc {
     constructor(x, y, deltaTime) {
         super(x, y, 0, 0, 0, Math.PI * 2, false, "yellow", "#00000000", 3);
@@ -242,9 +250,10 @@ class Bug extends Arc {
     }
 }
 
+// creates a player that can be drawn to the screen
 class Player extends CanvasImage {
     constructor(screenUpdatePeriod, imageID, flippedImageID) {
-        super(20, 20, imageID);
+        super(400, 250, imageID);
         this.flipped = document.getElementById(flippedImageID);
         this.normal = document.getElementById(imageID);
 
@@ -267,6 +276,7 @@ class Player extends CanvasImage {
         this.tail.rightOffset = this.width / 2;
         this.tail.yOffset = this.height / 2 - this.tail.height / 2;
 
+        // this element isn't rendered to the screen but is used to handle collisions
         this.catchNet = new Rectangle(this.x, this.y, this.net.width - this.width / 2, this.net.height * 2, "blue", "blue", 0);
         this.catchNet.rightOffset = this.catchNet.width + this.xSpeed / 2;
         this.catchNet.leftOffset = -(this.catchNet.width + this.xSpeed / 2);
@@ -359,8 +369,8 @@ class Player extends CanvasImage {
     }
 
     Restart() {
-        this.x = 20;
-        this.y = 20;
+        this.x = 400;
+        this.y = 250;
         this.isFlipped = false;
 
         this.timeSinceLastSwing = 3.1;

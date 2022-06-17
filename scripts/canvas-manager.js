@@ -149,6 +149,7 @@ class CanvasObject {
     }
 }
 
+// stores and keeps track of bugs on screen
 class BugManager {
     constructor(max_bugs_allowed, deltaTime) {
         this.max_bugs_allowed = max_bugs_allowed;
@@ -158,26 +159,31 @@ class BugManager {
         this.bugs = [];
     }
 
+    // draws the bugs to the screen
     Draw(context) {
         this.bugs.forEach(bug => {
             bug.Draw(context);
         });
     }
 
+    // generates a new bug
     GenerateBug() {
         this.timeSinceLastSpawn += this.deltaTime;
 
-        if (this.bugs.length < this.max_bugs_allowed && this.timeSinceLastSpawn > 1) {
-            this.bugs.push(new Bug(RandomNumber(100, 600), 480, this.deltaTime)); 
+        if (this.bugs.length < this.max_bugs_allowed && this.timeSinceLastSpawn > 0.75) {
+            this.bugs.push(new Bug(RandomNumber(20, 780), 480, this.deltaTime)); 
             this.timeSinceLastSpawn = 0;
         }
     }
 
+
+    // restarts the sequence of bugs
     Restart() {
         this.bugs = [];
         this.timeSinceLastSpawn = 1;
     }
 
+    // updates the position of bugs
     UpdatePosition(playerObject) {
         for (var i = 0; i < this.bugs.length; i++) {
             var bug = this.bugs[i];
@@ -194,6 +200,7 @@ class BugManager {
                 }
             } else {
                 bug.UpdatePosition();
+                // tests if the bug is out of the bounds of the screen
                 if (bug.StillInBounds()) {
                     this.bugs.splice(i, 1);
                     i--;
@@ -203,6 +210,7 @@ class BugManager {
     }
 }
 
+// interface which holds the basic requirements for a window
 class IWindow {
     constructor(context, width, height) {
         this.context = context;
@@ -213,13 +221,14 @@ class IWindow {
     Update() {}
 }
 
+// the main game window
 class GameWindow extends IWindow {
     constructor(context, width, height) {
         super(context, width, height);
 
         this.shapes = [];
         this.movingShapes = [];
-        this.bugCount = 28
+        this.bugCount = 35;
         this.bugManager = new BugManager(this.bugCount, _SCREEN_UPDATE_INTERVAL);
         this.score = 0;
         this.highScore = 0;
@@ -228,6 +237,7 @@ class GameWindow extends IWindow {
         this.createShapes();
     }
 
+    // creates all the shapes that are visible to the user
     createShapes() {
         this.playerObject = new Player(_SCREEN_UPDATE_INTERVAL, "player", "playerFlipped");
         this.playerObject.xBound = this.width - this.playerObject.width;
@@ -263,6 +273,7 @@ class GameWindow extends IWindow {
         this.shapes.push(this.pauseButton); 
     }
 
+    // draws all the shapes to the screen
     Draw() {
         this.movingShapes.forEach(shape => {
             shape.Draw(this.context);
@@ -273,6 +284,7 @@ class GameWindow extends IWindow {
         });
     }
 
+    // updates the position of elements on screen
     UpdatePosition() {
         this.movingShapes.forEach(shape => {
             shape.UpdatePosition();
@@ -283,22 +295,26 @@ class GameWindow extends IWindow {
         this.UpdateTime();
     }
 
+    // handles click events for buttons or sliders
     ClickEvent(xCoord, yCoord) {
         if (RectContains(this.pauseButton, xCoord, yCoord)) gameObject.isPaused = true;
     }
 
+    // used when the player has collected a bug
     Score() {
         this.score += 1;
         gameObject.collectSound.Play();
         this.scoreText.SetText("Score: " + this.score);
     }
 
+    // used when the player has run into a bug
     Unscore() {
         this.score -= 1;
         gameObject.hitSound.Play();
         this.scoreText.SetText("Score: " + this.score);
     }
 
+    // updates the time text
     UpdateTime() {
         this.time -= _SCREEN_UPDATE_INTERVAL;
         
@@ -315,6 +331,7 @@ class GameWindow extends IWindow {
         }
     }
 
+    // restarts the game
     Restart() {
         this.scoreText.SetText("Score: 0");
         this.score = 0;
@@ -324,6 +341,7 @@ class GameWindow extends IWindow {
     }
 }
 
+// the first window that the user sees
 class StartWindow extends IWindow {
     constructor(context, width, height) {
         super(context, width, height);
@@ -333,6 +351,7 @@ class StartWindow extends IWindow {
         this.createShapes();
     }
 
+    // creates the shapes 
     createShapes() {
         this.shapes.push(new CanvasText(this.width / 2, 100, " Bugz Catchin'", "80px Arial", "center", "white", "white", 0));
         this.shapes.push(new CanvasText(this.width / 2, 190, "Simulator", "80px Arial", "center", "white", "white", 0));
@@ -342,12 +361,14 @@ class StartWindow extends IWindow {
         this.shapes.push(this.optionsButton);
     }
 
+    // draws the shapes to the screen
     Draw() {
         this.shapes.forEach(shape => {
             shape.Draw(this.context);
         });
     }
 
+    // handles click events for the start and options buttons
     ClickEvent(xCoord, yCoord) {
         if (RectContains(this.startButton, xCoord, yCoord)) {
             gameObject.StartGame();
@@ -358,6 +379,7 @@ class StartWindow extends IWindow {
     }
 }
 
+// the menu that is accessed when clicking the pause button or clicking escape
 class PauseWindow extends IWindow {
     constructor(context, width, height) {
         super(context, width, height);
@@ -366,6 +388,7 @@ class PauseWindow extends IWindow {
         this.createShapes();
     }
 
+    // creating the shapes
     createShapes() {
         this.shapes.push(new Rectangle(this.width / 5, -5, 3 * this.width / 5, this.height + 10, "#000000aa", "black", 5));
         
@@ -381,12 +404,14 @@ class PauseWindow extends IWindow {
         this.shapes.push(this.quitButton);
     }
 
+    // drawing the shapes to the screen
     Draw() {
         this.shapes.forEach(shape => {
             shape.Draw(this.context);
         });
     }
 
+    // handling click events for volume slider, and quit and resume buttons
     ClickEvent(xCoord, yCoord) {
         if (RectContains(this.volumeSlider, xCoord, yCoord)) {
             this.volumeSlider.UpdateValue(xCoord);
@@ -401,6 +426,7 @@ class PauseWindow extends IWindow {
     }
 }
 
+// the window that allows the user to change settings
 class OptionWindow extends IWindow {
     constructor(context, width, height) {
         super(context, width, height);
@@ -410,6 +436,7 @@ class OptionWindow extends IWindow {
         this.createShapes();
     }
 
+    // creating the shapes
     createShapes() {
         this.shapes.push(new Rectangle(this.width / 5, -5, 3 * this.width / 5, this.height + 10, "#000000aa", "black", 5));
         
@@ -426,8 +453,8 @@ class OptionWindow extends IWindow {
 
         var controlsLeftX = this.width / 5 + 30;
         this.shapes.push(new CanvasText(this.width / 2, 275, "Controls", "45px Arial", "center", "white", "black", 2));
-        this.shapes.push(new CanvasText(controlsLeftX + 25, 325, "   W  ", "30px Arial", "left", "white", "white", 0));
-        this.shapes.push(new CanvasText(controlsLeftX + 25, 350, "A S D", "30px Arial", "left", "white", "white", 0))
+        this.shapes.push(new CanvasText(controlsLeftX + 25, 325, "Arrow", "30px Arial", "left", "white", "white", 0));
+        this.shapes.push(new CanvasText(controlsLeftX + 25, 350, "Keys", "30px Arial", "left", "white", "white", 0))
         this.shapes.push(new CanvasText(2 * controlsLeftX, 332, "Mr X Movement", "30px Arial", "left", "white", "white", 0));
         this.shapes.push(new CanvasText(controlsLeftX, 400, "Spacebar", "30px Arial", "left", "white", "white", 0));
         this.shapes.push(new CanvasText(2 * controlsLeftX, 400, "Swing Net", "30px Arial", "left", "white", "white", 0));
@@ -435,12 +462,14 @@ class OptionWindow extends IWindow {
         this.shapes.push(new CanvasText(2 * controlsLeftX, 450, "Pause Menu", "30px Arial", "left", "white", "white", 0));
     }
 
+    // drawing the shapes to the screen
     Draw() {
         this.shapes.forEach(shape => {
             shape.Draw(this.context);
         });
     }
 
+    // handling mouse clicks the volume and game length sliders and the back button
     ClickEvent(xCoord, yCoord) {
         if (RectContains(this.volumeSlider, xCoord, yCoord)) {
             this.volumeSlider.UpdateValue(xCoord);
@@ -456,6 +485,7 @@ class OptionWindow extends IWindow {
     }
 }
 
+// this window shows up when the user runs out of time
 class GameOverWindow extends IWindow {
     constructor(context, width, height) {
         super(context, width, height);
@@ -465,6 +495,7 @@ class GameOverWindow extends IWindow {
         this.createShapes();
     }
 
+    // creating the shapes.
     createShapes() {
         this.shapes.push(new Rectangle(this.width / 5, -5, 3 * this.width / 5, this.height + 10, "#000000aa", "black", 5));
         
@@ -483,10 +514,10 @@ class GameOverWindow extends IWindow {
         this.shapes.push(this.quitButton);
     }
 
+    // setting the visible score to the user
     SetScore(newScore, newHighScore) {
         this.score.SetText("Score: " + newScore);
         
-
         if (newHighScore < newScore) {
             this.newHighScoreText.fillColor = "white";
             this.highScore.SetText("Old High Score: " + newHighScore);
@@ -496,11 +527,14 @@ class GameOverWindow extends IWindow {
         }
     }
 
+    // drawing the shapes to the window
     Draw() {
         this.shapes.forEach(shape => {
             shape.Draw(this.context);
         });
     }
+    
+    // handling click events for the quit and restart buttons
     ClickEvent(xCoord, yCoord) {
         if (RectContains(this.restartButton, xCoord, yCoord)) {
             gameObject.StartGame();
