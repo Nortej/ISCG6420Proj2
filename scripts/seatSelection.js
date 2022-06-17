@@ -113,37 +113,7 @@ function seatSelectionInit() {
 
     // adding the event to select a specific seat for booking
     document.querySelectorAll(".empty_seat").forEach(buttonObject => {
-        buttonObject.addEventListener("click", event => {
-            var data = {row: buttonObject.getAttribute("row"), col: buttonObject.getAttribute("col")};
-            var id = buttonObject.id;
-            var data = {row: buttonObject.getAttribute("row"), col: buttonObject.getAttribute("column")};
-            // testing if the user has already selected the seat
-            if (currentlySelectedSeats[id] == undefined) {
-                // testing that the user can select another seat
-                if (currentlySelectedSeats.seat_count + 1 <= currentlySelectedSeats.max_seat_count) {
-                    currentlySelectedSeats[id] = data;
-                    currentlySelectedSeats.seat_count++;
-                    buttonObject.classList.toggle("selected_seat");
-
-                    // updating the count within the element
-                    remainingSeatsField.innerHTML = currentlySelectedSeats.max_seat_count - currentlySelectedSeats.seat_count;
-                    seatTakenError.classList.remove("display_animation");
-                    seatCountError.classList.remove("display_animation");
-                } else {
-                    // display error
-                    seatCountError.classList.remove("display_animation");
-                    seatCountError.offsetWidth;
-                    seatCountError.classList.add("display_animation");
-                }
-            } else {
-                delete currentlySelectedSeats[id];
-                currentlySelectedSeats.seat_count--;
-                buttonObject.classList.toggle("selected_seat");
-                remainingSeatsField.innerHTML = currentlySelectedSeats.max_seat_count - currentlySelectedSeats.seat_count;
-                seatCountError.classList.remove("display_animation");
-                seatTakenError.classList.remove("display_animation");
-            }
-        });
+        buttonObject.addEventListener("click", emptySeatEventHandler);
     });
 
     // displays that the seat has already been booked by someone
@@ -181,6 +151,39 @@ function createFromXML(selected_boat) {
         boat_layout.push(row_data);
     }
     return boat_layout;
+}
+
+function emptySeatEventHandler(event) {
+    var buttonObject = event.currentTarget;
+    var data = {row: buttonObject.getAttribute("row"), col: buttonObject.getAttribute("col")};
+    var id = buttonObject.id;
+    var data = {row: buttonObject.getAttribute("row"), col: buttonObject.getAttribute("column")};
+    // testing if the user has already selected the seat
+    if (currentlySelectedSeats[id] == undefined) {
+        // testing that the user can select another seat
+        if (currentlySelectedSeats.seat_count + 1 <= currentlySelectedSeats.max_seat_count) {
+            currentlySelectedSeats[id] = data;
+            currentlySelectedSeats.seat_count++;
+            buttonObject.classList.toggle("selected_seat");
+
+            // updating the count within the element
+            remainingSeatsField.innerHTML = currentlySelectedSeats.max_seat_count - currentlySelectedSeats.seat_count;
+            seatTakenError.classList.remove("display_animation");
+            seatCountError.classList.remove("display_animation");
+        } else {
+            // display error
+            seatCountError.classList.remove("display_animation");
+            seatCountError.offsetWidth;
+            seatCountError.classList.add("display_animation");
+        }
+    } else {
+        delete currentlySelectedSeats[id];
+        currentlySelectedSeats.seat_count--;
+        buttonObject.classList.toggle("selected_seat");
+        remainingSeatsField.innerHTML = currentlySelectedSeats.max_seat_count - currentlySelectedSeats.seat_count;
+        seatCountError.classList.remove("display_animation");
+        seatTakenError.classList.remove("display_animation");
+    }
 }
 
 // function to create the boat structure with html dynamically
@@ -228,8 +231,19 @@ function setSelectedSeatsTo(newStatus) {
     
     if (newStatus == "Booked") {
         document.querySelectorAll(".selected_seat").forEach(seat => {
+            var row = parseInt(seat.getAttribute("row")) - 1;
+            var col = parseInt(seat.getAttribute("column")) - 1;
+            selected_boat_layout[row][col].status = "Booked";
             seat.classList.remove("selected_seat");
+            seat.classList.remove("empty_seat");
             seat.classList.add("booked_seat");
+
+            seat.removeEventListener("click", emptySeatEventHandler);
+            seat.addEventListener("click", event => {
+                seatTakenError.classList.remove("display_animation");
+                seatTakenError.offsetWidth;
+                seatTakenError.classList.add("display_animation");
+            });
         });
     } else if (newStatus == "Clear") {
         document.querySelectorAll(".selected_seat").forEach(seat => {
