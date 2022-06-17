@@ -43,6 +43,7 @@ function goForwards() {
         clearInputs();
         alert("You have successfully booked! Payment is required on site before you board.");
         //sends user to page one
+        document.getElementById("forward").innerHTML = "Forwards"
         setVisibility(windowElements[currentPageIndex], false);
         currentPageIndex = 0;
         setVisibility(windowElements[currentPageIndex], true);
