@@ -22,7 +22,6 @@ function goBack() {
 
 // moves forward to the next page
 function goForwards() {
-    if (currentPageIndex >= numberOfWindows - 1) return;
     if (currentPageIndex != 3){document.getElementById("forward").innerHTML = "Forwards"}
     //doesn't let user continue if page 1 inputs are incomplete
     if (currentPageIndex == 0){
