@@ -74,6 +74,12 @@ function onPageLoad() {
             timeSelectionNode.disabled = false;
         }
     });
+
+    document.querySelectorAll("select, input").forEach(element => {
+        element.addEventListener("change", event => {
+            element.classList.remove("invalid");
+        });
+    });
 }
 
 var weatherForecast = {};

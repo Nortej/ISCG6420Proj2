@@ -26,7 +26,7 @@ function getInputs(){
         var seatA = selected_seats[i];
         var seatRow = parseInt(currentlySelectedSeats[seatA].row);
         var seatCol = parseInt(currentlySelectedSeats[seatA].col);
-        var seat = selected_boat_layout[seatRow][seatCol];
+        var seat = selected_boat_layout[seatRow - 1][seatCol - 1];
         seatCost += parseFloat(seat.price);
         document.getElementById("DtSeatCost").innerHTML = "$" + seatCost;
     }
