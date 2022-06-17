@@ -85,8 +85,8 @@
             <div class="window hidden">
                 <h2>Trip Seats</h2>
                 <div id="seat-selection">
-                    <table id="tere_table" class="seat-table"></table>
-                    <table id="nui_table" class="seat-table"></table>
+                    <div id="tere_table"></div>
+                    <div id="nui_table"></div>
                     <div id="seat_selection_side">
                         <div id="hover_element">
                             <h2>Seat Details</h2>
@@ -124,57 +124,27 @@
                 <h2>Confirm Booking</h2>
                 <div id="confirmation-content">
                     <h3>Trip Details</h3>
-                    <div>
-                        <label for="DtName">Name</label>
-                        <p id="DtName"></p>
-                    </div>
-                    <div>
-                        <label for="DtEmail">Email</label>
-                        <p id="DtEmail"></p>
-                    </div>
-                    <div>
-                        <label for="DtNumber">Contact Number</label>
-                        <p id="DtNumber"></p>
-                    </div>
-                    <div>
-                        <label for="DtBoat">Boat</label>
-                        <p id="DtBoat"></p>
-                    </div>
-                    <div>
-                        <label for="DtDateTime">Date & Time</label>
-                        <p id="DtDateTime"></p>
-                    </div>
-                    
+                    <p>Name: <span id="DtName"></span></p>
+                    <p>Email: <span id="DtEmail"></span></p>
+                    <p>Contact Number: <span id="DtNumber"></span></p>
+                    <p>Boat: <span id="DtBoat"></span></p>
+                    <p>Date & Time: <span id="DtDateTime"></span></p>
+                
                     <h3>Seat Details</h3>
-                    <div>
-                        <label for="DtPeopleCount">No. People</label>
-                        <p id="DtPeopleCount"></p>
-                    </div>
-                    <div>
-                        <label for="DtSeats">Selected Seats</label>
-                        <p id="DtSeats"></p>
-                    </div>
-                    <div>
-                        <label for="DtSeatCost">Seat Costs</label>
-                        <p id="DtSeatCost"></p>
-                    </div>
+                    <p>No. People: <span id="DtPeopleCount"></span></p>
+                    <p>Selected Seats: <span id="DtSeats"></span></p>
+                    <p>Seat Costs: $<span id="DtSeatCost"></span></p>
 
                     <h3>Food</h3>
                     <div id="DtMenu">
                         <table id="menuConfirm"></table>
                     </div>
-                    <div>Food Total:</div>
-                    <p id="finalMenuTotal">$0.00</p>
-                    
+                    <p>Food Total: <span id="finalMenuTotal">0.00</span></p>
+        
                     <h3>Total Cost</h3>
-                    <div>
-                        <label for="DtTotalCost">Total</label>
-                        <p id="DtTotalCost"></p>
-                    </div>
+                    <p>Total: $<span id="DtTotalCost"></span></p>
                 </div>
             </div>
-
-            <!--confirmation message ??-->
         </div>
     </body>
 </html>

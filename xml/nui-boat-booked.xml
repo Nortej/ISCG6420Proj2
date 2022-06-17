@@ -3,69 +3,129 @@
     <booked-seat>
         <row>3</row>
         <col>1</col>
+        <booked-times>
+            <time dayIndex="1">11</time>
+            <time dayIndex="2">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>3</row>
         <col>2</col>
+        <booked-times>
+            <time dayIndex="3">11</time>
+            <time dayIndex="4">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>3</row>
         <col>3</col>
+        <booked-times>
+            <time dayIndex="1">11</time>
+            <time dayIndex="2">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>3</row>
         <col>7</col>
+        <booked-times>
+            <time dayIndex="3">11</time>
+            <time dayIndex="4">2</time>
+        </booked-times>
     </booked-seat>
-
     <booked-seat>
         <row>5</row>
         <col>0</col>
+        <booked-times>
+            <time dayIndex="1">11</time>
+            <time dayIndex="2">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>5</row>
         <col>2</col>
+        <booked-times>
+            <time dayIndex="3">11</time>
+            <time dayIndex="4">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>5</row>
         <col>3</col>
+        <booked-times>
+            <time dayIndex="1">11</time>
+            <time dayIndex="2">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>5</row>
         <col>7</col>
+        <booked-times>
+            <time dayIndex="3">11</time>
+            <time dayIndex="4">2</time>
+        </booked-times>
     </booked-seat>
-    
     <booked-seat>
         <row>6</row>
         <col>0</col>
+        <booked-times>
+            <time dayIndex="3">11</time>
+            <time dayIndex="4">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>6</row>
         <col>5</col>
+        <booked-times>
+            <time dayIndex="3">11</time>
+            <time dayIndex="3">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>6</row>
         <col>6</col>
+        <booked-times>
+            <time dayIndex="4">11</time>
+            <time dayIndex="4">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>6</row>
         <col>7</col>
+        <booked-times>
+            <time dayIndex="2">11</time>
+            <time dayIndex="2">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>6</row>
         <col>8</col>
+        <booked-times>
+            <time dayIndex="1">11</time>
+            <time dayIndex="1">2</time>
+        </booked-times>
     </booked-seat>
-
     <booked-seat>
         <row>7</row>
         <col>0</col>
+        <booked-times>
+            <time dayIndex="1">11</time>
+            <time dayIndex="4">2</time>
+        </booked-times>
     </booked-seat>
-
     <booked-seat>
         <row>9</row>
         <col>0</col>
+        <booked-times>
+            <time dayIndex="3">11</time>
+            <time dayIndex="2">2</time>
+        </booked-times>
     </booked-seat>
     <booked-seat>
         <row>9</row>
         <col>1</col>
+        <booked-times>
+            <time dayIndex="2">11</time>
+            <time dayIndex="2">2</time>
+        </booked-times>
     </booked-seat>
 </nui-boat>

@@ -12,27 +12,20 @@ function getInputs() {
     //page2 seats
     //loop to display seat numbers
     var selected_seats = Object.keys(currentlySelectedSeats);
-    for(i=2; i< selected_seats.length; i++){
-        document.getElementById("DtSeats").innerHTML = ""; //set to nothing in case user goes back
-        document.getElementById("DtSeats").innerHTML += selected_seats[i];
-        if (i != (selected_seats.length -1) ){
-            document.getElementById("DtSeats").innerHTML += ", ";
+    var seatCosts = 0;
+    document.getElementById("DtSeats").innerHTML = ""; //set to nothing in case user goes back
+    selected_seats.forEach(seat => {
+        if (seat != "seat_count" && seat != "max_seat_count") {
+            currentSeat = currentlySelectedSeats[seat];
+            document.getElementById("DtSeats").innerHTML += seat + " ";
+            seatCosts += currentSeat.cost;
         }
-    }
+    });
 
-    //loop to get price of each seat
-    var seatCost = 0;
-    for(i=2; i<selected_seats.length; i++){
-        var seatA = selected_seats[i];
-        var seatRow = parseInt(currentlySelectedSeats[seatA].row);
-        var seatCol = parseInt(currentlySelectedSeats[seatA].col);
-        var seat = selected_boat_layout[seatRow - 1][seatCol - 1];
-        seatCost += parseFloat(seat.price);
-        document.getElementById("DtSeatCost").innerHTML = "$" + seatCost;
-    }
+    document.getElementById("DtSeatCost").innerHTML = seatCosts;
 
     //page3 menu
-    var menuTable = document.getElementsByTagName("table")[2];
+    var menuTable = document.getElementById("menu");
     var confirmTable = document.getElementById('menuConfirm');
     if (confirmTable.rows.length == 6){
         //delete any previous table rows in case user goes back
@@ -54,10 +47,9 @@ function getInputs() {
     }
 
     //total cost
-    var stringSeatCost = document.getElementById("DtSeatCost").innerHTML;
     var stringFoodCost = document.getElementById("finalMenuTotal").innerHTML;
-    document.getElementById("DtTotalCost").innerHTML = 
-    '$' + (parseFloat(stringSeatCost.substring(1, stringSeatCost.length)) + parseFloat(stringFoodCost.substring(1, stringFoodCost.length)));
+    var totalBookingCost = seatCosts + parseFloat(stringFoodCost.substring(1, stringFoodCost.length));
+    document.getElementById("DtTotalCost").innerHTML = totalBookingCost;
 }
 
 //this checks if the inputs on page 1 are filled out
@@ -98,7 +90,7 @@ function clearInputs() {
     document.getElementById("weather").style.display = "none";
 
     //clear menu
-    var menuTable = document.getElementsByTagName("table")[2];
+    var menuTable = document.getElementById("menu");
     for(var i =0; i<menuTable.rows.length; i++){
         document.getElementById("sliderValue" + i).innerHTML = "0";
         document.getElementById("slider" + i).value = 0;

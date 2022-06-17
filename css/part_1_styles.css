@@ -141,6 +141,11 @@ h2 {
 
 .seat-table {
     border: 0px;
+    display: none;
+}
+
+.seat-table.table-visible {
+    display: block;
 }
 
 .seat {

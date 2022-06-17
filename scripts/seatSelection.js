@@ -62,6 +62,9 @@ function boatXML(){
     var nui_booked = XMLDoc.getElementsByTagName("booked-seat");
     addBookedSeats(nui_booked, nui_boat_layout);
 }
+
+var something = {1: {10: false, 11: false, 12: false, 1: false, 2: false}, 2: {10: false, 11: false, 12: false, 1: false, 2: false}, 3: {10: false, 11: false, 12: false, 1: false, 2: false}, 4: {10: false, 11: false, 12: false, 1: false, 2: false}};
+
 //adds the booked seats from xml to boat layouts
 function addBookedSeats(booked_seats, booked_boat_layout){
     var SRow = 0;
@@ -69,14 +72,28 @@ function addBookedSeats(booked_seats, booked_boat_layout){
 
     //adding booked info to the tere-boat layout
     for (var i=0; i<booked_seats.length; i++){
-        SRow = booked_seats[i].getElementsByTagName("row")[0].childNodes[0].nodeValue;
-        SCol = booked_seats[i].getElementsByTagName("col")[0].childNodes[0].nodeValue;
-        booked_boat_layout[SRow][SCol] = 2;
+        SRow = parseInt(booked_seats[i].getElementsByTagName("row")[0].childNodes[0].nodeValue);
+        SCol = parseInt(booked_seats[i].getElementsByTagName("col")[0].childNodes[0].nodeValue);
+        var times = booked_seats[i].getElementsByTagName("booked-times");
+        if (times.length == 0) booked_boat_layout[SRow][SCol] = 2;
+        else {
+            var timesBooked = times[0].children;
+            var booked_times = {1: {}, 2: {}, 3: {}, 4: {}};
+
+            for (var timeSelected = 0; timeSelected < timesBooked.length; timeSelected++) {
+                var currentXMLTime = timesBooked[timeSelected];
+                var indexedDate = parseInt(currentXMLTime.getAttribute("dayIndex"));
+                var indexedTime = parseInt(currentXMLTime.innerHTML);
+                booked_times[indexedDate][indexedTime] = true;
+            }
+
+            booked_boat_layout[SRow][SCol] = new Seat(SRow + 1, SCol + 1, booked_times);
+        }
     }
 }
 
 class Seat {
-    constructor(row, column, status, booked_to) {
+    constructor(row, column, booked_times) {
         this.row = row;
         this.column = column;
 
@@ -84,9 +101,9 @@ class Seat {
         else if (row <= 5) this.price = 25;
         else this.price = 20;
 
-        this.status = status;
-        this.booked_to = booked_to;
         this.fancy_name = letterMap[this.row - 1] + (this.column);
+
+        this.booked_times = booked_times;
     }
 }
 
@@ -98,14 +115,33 @@ function seatSelectionInit() {
     seatTakenError = document.getElementById("already_booked_seat");
     seatCountError = document.getElementById("max_booked_seat");
 
-    var table_tere = document.getElementById("tere_table");
-    var table_nui = document.getElementById("nui_table");
+    var tere_existing_tables = document.getElementById("tere_table");
+    var nui_existing_tables = document.getElementById("nui_table");
     boatXML();
 
+
+    var hours = [10, 11, 12, 1, 2];
     tere_boat_layout_objects = createFromXML(tere_boat_layout);
-    createBoatLayout(tere_boat_layout_objects, table_tere);
+    for (var dayIndex = 1; dayIndex <= 4; dayIndex++) {
+        hours.forEach(hour => {
+            var tere_table = document.createElement("table");
+            tere_table.setAttribute("id", "tere_table_" + dayIndex + "_" + hour);
+            tere_table.classList.add("seat-table");
+            createBoatLayout(tere_boat_layout_objects, tere_table, dayIndex, hour);
+            tere_existing_tables.appendChild(tere_table);
+        })
+    }
+
     nui_boat_layout_objects = createFromXML(nui_boat_layout);
-    createBoatLayout(nui_boat_layout_objects, table_nui);
+    for (var dayIndex = 1; dayIndex <= 4; dayIndex++) {
+        hours.forEach(hour => {
+            var nui_table = document.createElement("table");
+            nui_table.setAttribute("id", "nui_table_" + dayIndex + "_" + hour);
+            nui_table.classList.add("seat-table");
+            createBoatLayout(nui_boat_layout_objects, nui_table, dayIndex, hour);
+            nui_existing_tables.appendChild(nui_table);
+        })
+    }
 
     // adding the event to show the information about the selected seat
     document.querySelectorAll(".booked_seat, .empty_seat").forEach(selectedSeat => {
@@ -146,9 +182,11 @@ function createFromXML(selected_boat) {
         var row_data = [];
         for (var col = 0; col < 9; col++) {
             var current_seat;
-            if (selected_boat[row][col] == 0) current_seat = new Seat(row + 1, col + 1, "null", "null");
-            else if (selected_boat[row][col] == 2) current_seat = new Seat(row + 1, col + 1, "Booked", "null");
-            else current_seat = new Seat(row + 1, col + 1, "Available", "null");
+            if (!Number.isInteger(selected_boat[row][col])) current_seat = selected_boat[row][col];
+            else {
+                if (selected_boat[row][col] == 0) current_seat = new Seat(row + 1, col + 1, undefined);
+                else current_seat = new Seat(row + 1, col + 1, {1: {}, 2: {}, 3: {}, 4: {}});
+            }
             row_data.push(current_seat);
         }
         boat_layout.push(row_data);
@@ -158,9 +196,12 @@ function createFromXML(selected_boat) {
 
 function emptySeatEventHandler(event) {
     var buttonObject = event.currentTarget;
-    var data = {row: buttonObject.getAttribute("row"), col: buttonObject.getAttribute("col")};
     var id = buttonObject.id;
-    var data = {row: buttonObject.getAttribute("row"), col: buttonObject.getAttribute("column")};
+
+    var seatRow = parseInt(buttonObject.getAttribute("row")) - 1;
+    var seatColumn = parseInt(buttonObject.getAttribute("column")) - 1;
+
+    var data = {row: seatRow, col: seatColumn, cost: selected_boat_layout[seatRow][seatColumn].price};
     // testing if the user has already selected the seat
     if (currentlySelectedSeats[id] == undefined) {
         // testing that the user can select another seat
@@ -190,7 +231,7 @@ function emptySeatEventHandler(event) {
 }
 
 // function to create the boat structure with html dynamically
-function createBoatLayout(boatStructure, table) {
+function createBoatLayout(boatStructure, table, dayIndex, hour) {
     var no_seat = document.createElement("td");
     no_seat.classList.add("seat");
 
@@ -211,9 +252,9 @@ function createBoatLayout(boatStructure, table) {
         var tableRow = document.createElement("tr");
         row.forEach(cell => {
             var table_cell;
-            if (cell.status == 'null') table_cell = no_seat.cloneNode(true);
+            if (cell.booked_times == undefined) table_cell = no_seat.cloneNode(true);
             else {
-                if (cell.status == 'Booked') table_cell = booked_seat.cloneNode(true);
+                if (cell.booked_times[dayIndex][hour] != undefined) table_cell = booked_seat.cloneNode(true);
                 else table_cell = empty_seat.cloneNode(true);
 
                 var childButton = table_cell.childNodes[0];
