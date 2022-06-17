@@ -40,8 +40,6 @@ function goForwards() {
 
     //display booked message and send user back to page1
     if(currentPageIndex == 3){
-        //set selected seats to booked - save locally
-        setSelectedSeatsTo("Booked");
         clearInputs();
         alert("You have successfully booked! Payment is required on site before you board.");
         //sends user to page one
