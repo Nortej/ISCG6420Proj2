@@ -7,7 +7,12 @@ function getInputs() {
         document.getElementById("DtBoat").innerHTML = "Tere Boat";
     } else{document.getElementById("DtBoat").innerHTML = "Nui Boat";}
     document.getElementById("DtPeopleCount").innerHTML = document.getElementById("seat-count").value;
-    document.getElementById("DtDateTime").innerHTML = document.getElementById("trip-time-count").value + ':00, ' + document.getElementById("trip-date").value;
+    var time = document.getElementById("trip-time-count").value;
+    if (time == '1' || time == '2' || time == '12'){
+        document.getElementById("DtDateTime").innerHTML = time + 'pm, ' + document.getElementById("trip-date").value;
+    }
+    else{document.getElementById("DtDateTime").innerHTML = time + 'am, ' + document.getElementById("trip-date").value;}
+    //document.getElementById("DtDateTime").innerHTML = document.getElementById("trip-time-count").value + ':00, ' + document.getElementById("trip-date").value;
     
     //page2 seats
     //loop to display seat numbers
