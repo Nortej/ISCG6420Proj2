@@ -3,7 +3,6 @@ var seatCountError, seatTakenError;
 var currentlySelectedSeats = {seat_count: 0, max_seat_count: 10};
 var letterMap = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"];
 
-
 /*layout of boats:
     0=no seat
     1=available
@@ -36,14 +35,6 @@ var nui_boat_layout = [[0, 0, 1, 1, 0, 1, 1, 0, 0],
                         [0, 1, 1, 1, 0, 1, 1, 1, 0]
                     ];
 
-
-/*
-XML FORMAT
-boat name="boat-name"
-    seat row="1", column="1"
-        status - booked, not booked
-        bookedto - who booked the seat
-*/
 //boat booked seats xml stuff
 function boatXML(){
     var xmlhttp;
@@ -80,7 +71,6 @@ function addBookedSeats(booked_seats, booked_boat_layout){
         booked_boat_layout[SRow][SCol] = 2;
     }
 }
-
 
 class Seat {
     constructor(row, column, status, booked_to) {
@@ -231,4 +221,19 @@ function createBoatLayout(boatStructure, table) {
         })
         table.appendChild(tableRow);
     });
+}
+
+function setSelectedSeatsTo(newStatus) {
+    currentlySelectedSeats = {seat_count: 0, max_seat_count: 0};
+    
+    if (newStatus == "Booked") {
+        document.querySelectorAll(".selected_seat").forEach(seat => {
+            seat.classList.remove("selected_seat");
+            seat.classList.add("booked_seat");
+        });
+    } else if (newStatus == "Clear") {
+        document.querySelectorAll(".selected_seat").forEach(seat => {
+            seat.classList.remove("selected_seat");
+        });
+    }
 }

@@ -17,20 +17,21 @@ function goBack() {
     setVisibility(windowElements[currentPageIndex], true);
 
     if (currentPageIndex != 3){document.getElementById("forward").innerHTML = "Forwards"}
+    if (currentPageIndex == 0) setSelectedSeatsTo("Clear");
 }
 
 // moves forward to the next page
 function goForwards() {
-    //if (currentPageIndex >= numberOfWindows - 1) return;
+    if (currentPageIndex >= numberOfWindows - 1) return;
     if (currentPageIndex != 3){document.getElementById("forward").innerHTML = "Forwards"}
-    //doesn't let user continue if page 1 inputs are incomplete//
+    //doesn't let user continue if page 1 inputs are incomplete
     if (currentPageIndex == 0){
         if (!validatePage1()) {
             alert("The inputs are incomplete!");
             return;
         }
     }
-    //doesn't let user continue if too few seats are selected//
+    //doesn't let user continue if too few seats are selected
     if (currentPageIndex==1){
         if(!validatePage2()){
             alert("You must select enough seats for those on the trip!");
@@ -40,7 +41,8 @@ function goForwards() {
 
     //display booked message and send user back to page1
     if(currentPageIndex == 3){
-        //***set selected seats to booked - save locally
+        //set selected seats to booked - save locally
+        setSelectedSeatsTo("Booked");
         clearInputs();
         alert("You have successfully booked! Payment is required on site before you board.");
         //sends user to page one
