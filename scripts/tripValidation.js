@@ -8,7 +8,7 @@ function getInputs() {
     } else{document.getElementById("DtBoat").innerHTML = "Nui Boat";}
     document.getElementById("DtPeopleCount").innerHTML = document.getElementById("seat-count").value;
     var time = document.getElementById("trip-time-count").value;
-    if (time == '1' || time == '2'){
+    if (time == '1' || time == '2' || time == '12'){
         document.getElementById("DtDateTime").innerHTML = time + 'pm, ' + document.getElementById("trip-date").value;
     }
     else{document.getElementById("DtDateTime").innerHTML = time + 'am, ' + document.getElementById("trip-date").value;}
