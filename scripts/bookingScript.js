@@ -1,5 +1,6 @@
 var currentPageIndex = 0;
 var windowElements, numberOfWindows;
+var currentSelectedHour, currentSelectedDay;
 
 function init() {
     windowElements = document.querySelectorAll(".window");
@@ -67,7 +68,8 @@ function goForwards() {
         var timeBetween = new Date(date_selection.value) - new Date(date_selection.min);
         timeBetween /= (1000 * 60 * 60 * 24);
         var time_selection = document.getElementById("trip-time-count").value;
-
+        currentSelectedDay = timeBetween;
+        currentSelectedHour = time_selection;
 
         if(boat_selection == 'tere'){
             selected_boat_layout = tere_boat_layout_objects;

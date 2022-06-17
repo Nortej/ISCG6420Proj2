@@ -172,6 +172,7 @@ h2 {
 
 .seat .selected_seat {
     background-color: #FFEDE1;
+    color: black;
 }
 
 #seat_selection_side {

@@ -12,31 +12,33 @@ boat_layouts are predefined with all seats as "available" as they do not change.
 The booked seats are then dynamically added from the xml file instead. 
 This makes the site load faster as less data is being pulled from external files.
 */
-var tere_boat_layout = [[0, 1, 1, 1, 0, 1, 1, 1, 0],
-                     [0, 1, 1, 1, 0, 1, 1, 1, 0], 
-                     [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                     [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                     [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                     [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                     [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                     [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                     [0, 1, 1, 1, 0, 1, 1, 1, 0]
-                    ];
+var nui_boat_layout, tere_boat_layout;
 
-var nui_boat_layout = [[0, 0, 1, 1, 0, 1, 1, 0, 0],
-                        [0, 0, 1, 1, 0, 1, 1, 0, 0],
-                        [0, 1, 1, 1, 0, 1, 1, 1, 0],
-                        [0, 1, 1, 1, 0, 1, 1, 1, 0],
-                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                        [1, 1, 1, 1, 0, 1, 1, 1, 1],
-                        [0, 1, 1, 1, 0, 1, 1, 1, 0],
-                        [0, 1, 1, 1, 0, 1, 1, 1, 0]
-                    ];
+function loadBoatLayout(fileName) {
+    var specific_layout = [];
+    var xmlobject;
+
+    if(window.XMLHttpRequest) xmlobject = new XMLHttpRequest();
+    else xmlobject = new ActiveXObject("Microsoft.XMLHTTP");
+
+    xmlobject.open("GET", "/xml/" + fileName, false);
+    xmlobject.send();
+
+    var boatResponse = xmlobject.responseXML;
+    var boat_data = boatResponse.getElementsByTagName("boat")[0].children;
+
+    for (var index = 0; index < boat_data.length; index++) {
+        var row_array = [];
+        var seats = boat_data[index].children;
+        for (var secondIndex = 0; secondIndex < seats.length; secondIndex++) {
+            var item = parseInt(seats[secondIndex].innerHTML);
+            row_array.push(item);
+        }
+        specific_layout.push(row_array);
+    }
+
+    return specific_layout;
+}
 
 //boat booked seats xml stuff
 function boatXML(){
@@ -62,8 +64,6 @@ function boatXML(){
     var nui_booked = XMLDoc.getElementsByTagName("booked-seat");
     addBookedSeats(nui_booked, nui_boat_layout);
 }
-
-var something = {1: {10: false, 11: false, 12: false, 1: false, 2: false}, 2: {10: false, 11: false, 12: false, 1: false, 2: false}, 3: {10: false, 11: false, 12: false, 1: false, 2: false}, 4: {10: false, 11: false, 12: false, 1: false, 2: false}};
 
 //adds the booked seats from xml to boat layouts
 function addBookedSeats(booked_seats, booked_boat_layout){
@@ -117,8 +117,11 @@ function seatSelectionInit() {
 
     var tere_existing_tables = document.getElementById("tere_table");
     var nui_existing_tables = document.getElementById("nui_table");
-    boatXML();
 
+    nui_boat_layout = loadBoatLayout("nui-boat-layout.xml");
+    tere_boat_layout = loadBoatLayout("tere-boat-layout.xml");
+
+    boatXML();
 
     var hours = [10, 11, 12, 1, 2];
     tere_boat_layout_objects = createFromXML(tere_boat_layout);
@@ -170,7 +173,13 @@ function setHoveredContent(selectedSeat) {
     var row = parseInt(selectedSeat.getAttribute("row"));
     var column = parseInt(selectedSeat.getAttribute("column"));
     var seat = selected_boat_layout[row - 1][column - 1];
-    hoverElementStatusField.innerHTML = seat.status;
+    
+    if (seat.booked_times[currentSelectedDay][currentSelectedHour]) {
+        hoverElementStatusField.innerHTML = "Booked";
+    } else {
+        hoverElementStatusField.innerHTML = "Available";
+    }
+
     hoverElementCostField.innerHTML = seat.price;
     hoverElementLocationField.innerHTML = letterMap[row - 1] + column;
 }
