@@ -290,21 +290,6 @@ class Player extends CanvasImage {
     }
 
     Draw(context) {
-        if (!this.isFlipped) {
-            this.imageElement = this.flipped;
-            this.tail.imageElement = this.tail.flipped;
-            this.tail.Draw(context);
-            super.Draw(context);
-        } else {
-            this.imageElement = this.normal;
-            this.tail.imageElement = this.tail.normal;
-            this.tail.Draw(context);
-            super.Draw(context);
-        }
-
-        this.leftEye.Draw(context);
-        this.rightEye.Draw(context);
-
         var contextXOffset = this.x + this.width / 2;
         var contextYOffset = this.y + this.height / 1.4;
         context.translate(contextXOffset, contextYOffset);
@@ -319,6 +304,21 @@ class Player extends CanvasImage {
         }
         context.rotate(-this.netRotation);
         context.translate(-contextXOffset, -contextYOffset);
+
+        if (!this.isFlipped) {
+            this.imageElement = this.flipped;
+            this.tail.imageElement = this.tail.flipped;
+            this.tail.Draw(context);
+            super.Draw(context);
+        } else {
+            this.imageElement = this.normal;
+            this.tail.imageElement = this.tail.normal;
+            this.tail.Draw(context);
+            super.Draw(context);
+        }
+
+        this.leftEye.Draw(context);
+        this.rightEye.Draw(context);
     }
 
     UpdateOtherFeatures() {

@@ -255,9 +255,9 @@ class GameWindow extends IWindow {
         }
         this.movingShapes.push(this.playerObject);
 
-        this.scoreText = new CanvasText(this.width / 2, 100, "Score: 0", "30px Arial", "center", "black", "black", 0);
+        this.scoreText = new CanvasText(30, 70, "Score: 0", "20px Arial", "left", "black", "black", 0);
         this.shapes.push(this.scoreText);
-        this.timeText = new CanvasText(30, 30, "Time: 0", "20px Arial", "left", "black", "black", 0);
+        this.timeText = new CanvasText(30, 50, "Time: 0", "20px Arial", "left", "black", "black", 0);
         this.shapes.push(this.timeText);
         this.pauseButton = new Button(this.width - 50, 50, 50, 80, "||", 30, "Arial", "#000000aa", "white", 5);
         this.shapes.push(this.pauseButton); 
